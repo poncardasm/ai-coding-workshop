@@ -18,3 +18,36 @@ By the end of the workshop, each participant will have a working one-page websit
 - **Participants:** 10
 - **Requirements:** Laptop, internet connection, and willingness to experiment
 - **Outcome:** Each participant leaves with a working personal portfolio or business landing page.
+
+## Repository Structure
+
+- `docs/` contains workshop planning notes and outlines.
+- `slides/` contains Open Slide decks.
+- `themes/` contains optional shared Open Slide themes.
+- `assets/` can hold shared workshop assets.
+
+## Slides
+
+This repo uses [Open Slide](https://open-slide.dev/docs) for the React-based workshop slides. Each deck lives under `slides/<id>/index.tsx` and default-exports an array of page components.
+
+Run the slide deck locally:
+
+```bash
+npm install
+npm run dev
+```
+
+The Open Slide dev server runs on `http://localhost:5173` or the next available port.
+
+Useful scripts:
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the Open Slide dev server with hot reload. |
+| `npm run build` | Build a static slide bundle to `dist/`. |
+| `npm run preview` | Preview the built slide bundle locally. |
+| `npm run sync:skills` | Sync Open Slide agent skills. |
+
+## Open Slide Notes
+
+Every slide renders into a fixed **1920 x 1080** canvas. Slides are React components, not Markdown slides, so design with fixed presentation layouts rather than responsive web page layouts.

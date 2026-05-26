@@ -21,12 +21,12 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Node
+# Dependencies
 node_modules/
+
+# Open Slide / build output
 dist/
 build/
-.next/
-out/
 .vite/
 coverage/
 
