@@ -22,7 +22,7 @@ By the end of the workshop, each participant will have a working one-page websit
 ## Repository Structure
 
 - `docs/` contains workshop planning notes and outlines.
-- `docs/handout.html` is a one-page participant guide (OpenCode + OpenRouter setup). Open it in a browser or host it alongside the slides.
+- `docs/handout.html` is a one-page participant guide (OpenCode + Neuralwatt setup). Open it in a browser or host it alongside the slides.
 - `slides/` contains Open Slide decks.
 - `themes/` contains optional shared Open Slide themes.
 - `assets/` can hold shared workshop assets.

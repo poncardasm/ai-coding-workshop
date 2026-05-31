@@ -428,6 +428,32 @@
       margin-bottom: 0.35rem;
     }
 
+    .screenshots {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin: 1.25rem 0 1.5rem;
+    }
+
+    .screenshots figure {
+      margin: 0;
+    }
+
+    .screenshots img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .screenshots figcaption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
     @media print {
       body { font-size: 10pt; }
       .wrap { padding: 0; max-width: none; }
@@ -446,10 +472,10 @@
     <header>
       <p class="eyebrow">Follow-along guide</p>
       <h1>From Idea to Website: AI Coding for Beginners</h1>
-      <p class="lede">Set up OpenCode and a free AI model before we start building. Bookmark this page on your laptop.</p>
+      <p class="lede">Set up OpenCode and Neuralwatt before we start building. Bookmark this page for easy access.</p>
       <nav class="toc" aria-label="On this page">
         <a href="#opencode">OpenCode</a>
-        <a href="#openrouter">OpenRouter</a>
+        <a href="#neuralwatt">Neuralwatt</a>
         <a href="#connect">Connect them</a>
         <a href="#writing-prompts">Writing prompts</a>
         <a href="#prompts">Example prompts</a>
@@ -494,34 +520,32 @@
       <p class="note">Optional: OpenCode also ships as a terminal app (<code>curl -fsSL https://opencode.ai/install | bash</code>). The desktop app is enough for today.</p>
     </section>
 
-    <section id="openrouter">
-      <h2><span class="num" aria-hidden="true">2</span> Get a free AI API key (OpenRouter)</h2>
+    <section id="neuralwatt">
+      <h2><span class="num" aria-hidden="true">2</span> Get a Neuralwatt API key</h2>
       <p>
-        <a href="https://openrouter.ai/" target="_blank" rel="noopener noreferrer">OpenRouter</a> gives you one API key for many models.
-        You can use <strong>free models</strong> without buying credits — no credit card required to sign up.
+        <a href="https://portal.neuralwatt.com/" target="_blank" rel="noopener noreferrer">Neuralwatt Cloud</a> provides an OpenAI-compatible API for coding models.
+        Registration is free — new accounts get <strong>$5 in trial credit</strong>, valid for <strong>30 days</strong>.
       </p>
 
       <div class="btn-row">
-        <a class="btn btn-primary" href="https://openrouter.ai/" target="_blank" rel="noopener noreferrer">Sign up at OpenRouter</a>
-        <a class="btn btn-secondary" href="https://openrouter.ai/settings/keys" target="_blank" rel="noopener noreferrer">API Keys page</a>
-        <a class="btn btn-secondary" href="https://openrouter.ai/models?fmt=cards&input_modalities=text&order=pricing-low-to-high" target="_blank" rel="noopener noreferrer">Browse free models</a>
+        <a class="btn btn-primary" href="https://portal.neuralwatt.com/auth/register" target="_blank" rel="noopener noreferrer">Create free account</a>
+        <a class="btn btn-secondary" href="https://portal.neuralwatt.com/" target="_blank" rel="noopener noreferrer">Neuralwatt portal</a>
+        <a class="btn btn-secondary" href="https://portal.neuralwatt.com/docs/integrations/opencode" target="_blank" rel="noopener noreferrer">OpenCode integration docs</a>
       </div>
 
       <h3>Create your API key</h3>
       <ol>
-        <li>Go to <a href="https://openrouter.ai/" target="_blank" rel="noopener noreferrer">openrouter.ai</a> and sign up (email, Google, or GitHub)</li>
-        <li>Open <strong>Settings → Keys</strong> (direct link: <a href="https://openrouter.ai/settings/keys" target="_blank" rel="noopener noreferrer">openrouter.ai/settings/keys</a>)</li>
+        <li>Go to <a href="https://portal.neuralwatt.com/auth/register" target="_blank" rel="noopener noreferrer">portal.neuralwatt.com/auth/register</a> and create your account</li>
+        <li>Sign in to the portal and open <strong>Dashboard → API Keys</strong></li>
         <li>Click <strong>Create Key</strong>, name it (e.g. <code>workshop</code>)</li>
-        <li>Copy the key — it starts with <code>sk-or-</code>. Store it somewhere safe; you won’t see the full key again.</li>
+        <li>Copy the key and store it somewhere safe — you won’t see the full key again</li>
       </ol>
 
       <div class="card highlight">
-        <p class="card-title">Free models for the workshop</p>
+        <p class="card-title">Trial credit for the workshop</p>
         <p style="margin:0">
-          Pick models whose ID ends with <code>:free</code> (example: <code>deepseek/deepseek-r1:free</code>),
-          or use the router <code>openrouter/free</code> to auto-pick a free model.
-          New accounts get about <strong>50 free requests per day</strong> — plenty for learning.
-          See <a href="https://openrouter.ai/docs/faq" target="_blank" rel="noopener noreferrer">OpenRouter FAQ</a> for current limits.
+          Your <strong>$5 trial credit</strong> lasts <strong>30 days</strong> from signup — enough for today’s exercises and follow-up practice.
+          Neuralwatt uses energy-based pricing; check your usage in the portal dashboard if you want to see what’s left.
         </p>
       </div>
 
@@ -531,20 +555,43 @@
     </section>
 
     <section id="connect">
-      <h2><span class="num" aria-hidden="true">3</span> Connect OpenCode to OpenRouter</h2>
-      <p>After OpenCode is installed and you have your <code>sk-or-…</code> key:</p>
+      <h2><span class="num" aria-hidden="true">3</span> Connect OpenCode to Neuralwatt</h2>
+      <p>After OpenCode is installed and you have your Neuralwatt API key, connect it in the desktop app — no config files or environment variables needed.</p>
 
-      <h3>In the OpenCode app</h3>
+      <h3>In OpenCode Desktop</h3>
       <ol>
-        <li>Open OpenCode and create or open your project folder</li>
-        <li>In the chat/command area, run: <kbd>/connect</kbd></li>
-        <li>Choose <strong>OpenRouter</strong> from the list</li>
-        <li>Paste your API key when prompted and confirm</li>
-        <li>Run <kbd>/models</kbd> and select a free model (look for <code>:free</code> in the name, or <code>openrouter/free</code>)</li>
+        <li>Open OpenCode and click the <strong>settings</strong> icon (gear) in the sidebar</li>
+        <li>Under <strong>Server</strong>, click <strong>Providers</strong></li>
+        <li>Search for <strong>Neuralwatt</strong> and click the <strong>+</strong> next to it</li>
+        <li>Paste your API key and click <strong>Continue</strong></li>
+        <li>Click the <strong>model name</strong> below the chat box (next to <strong>Build</strong>), search models, and pick one under <strong>Neuralwatt</strong> (e.g. Kimi K2.6, Qwen3.5)</li>
       </ol>
 
+      <div class="screenshots">
+        <figure>
+          <img
+            src="assets/opencode-connect-provider-neuralwatt.png"
+            alt="OpenCode Connect provider dialog with Neuralwatt highlighted in search results"
+            width="681"
+            height="367"
+            loading="lazy"
+          />
+          <figcaption>Search for Neuralwatt and click <strong>+</strong> to add the provider</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="assets/opencode-connect-neuralwatt-api-key.png"
+            alt="OpenCode Connect Neuralwatt dialog with API key field and Continue button"
+            width="681"
+            height="389"
+            loading="lazy"
+          />
+          <figcaption>Paste your Neuralwatt API key and click <strong>Continue</strong></figcaption>
+        </figure>
+      </div>
+
       <p class="note">
-        More detail: <a href="https://openrouter.ai/docs/cookbook/coding-agents/opencode-integration" target="_blank" rel="noopener noreferrer">OpenRouter × OpenCode guide</a>
+        More detail: <a href="https://portal.neuralwatt.com/docs/integrations/opencode" target="_blank" rel="noopener noreferrer">Neuralwatt × OpenCode guide</a>
         and <a href="https://opencode.ai/docs/providers" target="_blank" rel="noopener noreferrer">OpenCode providers docs</a>.
       </p>
 
@@ -766,17 +813,17 @@ Fix only that issue in index.html. Show me the exact CSS you changed.</pre>
 
       <h3>Useful OpenCode commands</h3>
       <ul>
-        <li><kbd>/connect</kbd> — add or change your AI provider</li>
-        <li><kbd>/models</kbd> — switch models</li>
+        <li><strong>Settings → Providers</strong> — add or change your AI provider (e.g. Neuralwatt)</li>
+        <li><strong>Model picker</strong> (below the chat box) — switch Neuralwatt models</li>
         <li><kbd>/init</kbd> — help OpenCode understand your project (run once per folder)</li>
         <li><kbd>/undo</kbd> — revert the last change</li>
       </ul>
 
       <h3>If something goes wrong</h3>
       <ul>
-        <li><strong>Auth errors</strong> — run <kbd>/connect</kbd> again and re-paste the key</li>
-        <li><strong>Rate limit (OpenRouter)</strong> — wait a few minutes or try another <code>:free</code> model</li>
-        <li><strong>Model not found</strong> — run <kbd>/models</kbd> and pick from the list instead of typing IDs by hand</li>
+        <li><strong>Auth errors</strong> — open <strong>Settings → Providers → Neuralwatt</strong> and re-paste your API key</li>
+        <li><strong>Out of credit (Neuralwatt)</strong> — check your balance in the portal dashboard; trial credit lasts 30 days</li>
+        <li><strong>Model not found</strong> — click the model name below the chat box and pick from the Neuralwatt list instead of typing model IDs by hand</li>
         <li>Ask the facilitator — we’re here to help</li>
       </ul>
     </section>
@@ -787,8 +834,8 @@ Fix only that issue in index.html. Show me the exact CSS you changed.</pre>
         <ul>
           <li><a href="https://opencode.ai/download">OpenCode download</a></li>
           <li><a href="https://opencode.ai/docs">OpenCode docs</a></li>
-          <li><a href="https://openrouter.ai/settings/keys">OpenRouter API keys</a></li>
-          <li><a href="https://openrouter.ai/models">OpenRouter model list</a></li>
+          <li><a href="https://portal.neuralwatt.com/auth/register">Neuralwatt — create account</a></li>
+          <li><a href="https://portal.neuralwatt.com/docs/integrations/opencode">Neuralwatt × OpenCode setup</a></li>
         </ul>
       </div>
 
