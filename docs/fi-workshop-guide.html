@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ideasta verkkosivuksi: Tekoälyavusteinen koodaus aloittelijoille</title>
+  <link rel="alternate" hreflang="en" href="en-workshop-guide.html" />
+  <link rel="alternate" hreflang="fi" href="fi-workshop-guide.html" />
+  <link rel="alternate" hreflang="sv" href="sv-workshop-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="en-workshop-guide.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Akt:wght@100..900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #faf9f5;
+      --text: #141413;
+      --muted: #5e5d59;
+      --dim: #8a8880;
+      --surface: #e8e6dc;
+      --border: rgba(20, 20, 19, 0.12);
+      --accent: #d97757;
+      --accent-soft: rgba(217, 119, 87, 0.14);
+      --green: #788c5d;
+      --blue: #6a9bcc;
+      --radius: 10px;
+      --max: 720px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Akt", system-ui, sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    header {
+      margin-bottom: 2.25rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: clamp(1.75rem, 5vw, 2.25rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+    }
+
+    .lede {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    nav.toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+
+    nav.toc a {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--text);
+      background: var(--surface);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    nav.toc a:hover {
+      background: var(--accent-soft);
+      border-color: rgba(217, 119, 87, 0.35);
+    }
+
+    nav.lang {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    nav.lang a {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--muted);
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    nav.lang a:hover {
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    nav.lang a[aria-current="page"] {
+      color: var(--text);
+      font-weight: 600;
+      background: var(--accent-soft);
+      border-color: rgba(217, 119, 87, 0.35);
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    h2 .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.65rem;
+      height: 1.65rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      flex-shrink: 0;
+      position: relative;
+      top: -0.05em;
+    }
+
+    h3 {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 1.25rem 0 0.5rem;
+    }
+
+    p { margin-bottom: 0.85rem; }
+    p:last-child { margin-bottom: 0; }
+
+    ul, ol {
+      margin: 0 0 1rem 1.25rem;
+    }
+
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    a {
+      color: var(--accent);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+
+    a:hover { text-decoration-thickness: 2px; }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.2rem;
+      margin: 1rem 0;
+    }
+
+    .card.highlight {
+      background: var(--accent-soft);
+      border-color: rgba(217, 119, 87, 0.25);
+    }
+
+    .card-title {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 1rem 0;
+    }
+
+    .btn {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.55rem 1rem;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(217, 119, 87, 0.35);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    code, kbd {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.88em;
+      background: var(--surface);
+      padding: 0.12em 0.4em;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    kbd {
+      font-size: 0.82em;
+      box-shadow: 0 1px 0 var(--border);
+    }
+
+    pre {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      background: var(--text);
+      color: #e8e6dc;
+      padding: 1rem 1.1rem;
+      border-radius: var(--radius);
+      overflow-x: auto;
+      margin: 0.75rem 0 1rem;
+    }
+
+    .note {
+      font-size: 0.92rem;
+      color: var(--muted);
+      border-left: 3px solid var(--blue);
+      padding-left: 0.85rem;
+      margin: 1rem 0;
+    }
+
+    .warn {
+      border-left-color: var(--accent);
+    }
+
+    .tracks-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-top: 1.25rem;
+    }
+
+    .track-accordion {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .track-accordion summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 1rem 1.15rem;
+      user-select: none;
+    }
+
+    .track-accordion summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .track-summary-aside {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.35rem;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding-top: 0.1rem;
+    }
+
+    .track-expand-hint {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--dim);
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .track-expand-hint .hint-open {
+      display: none;
+    }
+
+    .track-accordion[open] .track-expand-hint .hint-closed {
+      display: none;
+    }
+
+    .track-accordion[open] .track-expand-hint .hint-open {
+      display: inline;
+    }
+
+    .track-summary-aside::after {
+      content: "";
+      flex-shrink: 0;
+      width: 0.55rem;
+      height: 0.55rem;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg);
+      transition: transform 0.2s ease;
+    }
+
+    .track-accordion[open] .track-summary-aside::after {
+      transform: rotate(-135deg);
+    }
+
+    .track-accordion summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+
+    .track-summary-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .track-summary-text p {
+      margin: 0;
+    }
+
+    .track-label {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--green);
+      line-height: 1.35;
+      margin-bottom: 0.4rem;
+    }
+
+    .track-summary-hint {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .track-panel {
+      padding: 0 1.15rem 1.15rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .track-panel .prompt-step:first-child {
+      margin-top: 1rem;
+    }
+
+    .prompt-step {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 1.15rem 0 0.4rem;
+    }
+
+    .prompt-block {
+      position: relative;
+      margin: 0.5rem 0 1rem;
+    }
+
+    pre.prompt {
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+      padding: 2.75rem 1.1rem 1rem;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 0.55rem;
+      right: 0.55rem;
+      z-index: 1;
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1;
+      padding: 0.4rem 0.7rem;
+      border: 1px solid rgba(250, 249, 245, 0.2);
+      border-radius: 6px;
+      background: rgba(250, 249, 245, 0.12);
+      color: #e8e6dc;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .copy-btn:hover {
+      background: rgba(250, 249, 245, 0.22);
+      border-color: rgba(250, 249, 245, 0.35);
+    }
+
+    .copy-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .copy-btn.copied {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    footer ul {
+      list-style: none;
+      margin: 0.5rem 0 0;
+    }
+
+    footer li { margin-bottom: 0.3rem; }
+    footer li::marker { content: none; }
+
+    .footer-section {
+      margin-top: 1.35rem;
+    }
+
+    .footer-section > p:first-child {
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-note {
+      font-size: 0.86rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.45;
+    }
+
+    .facilitator {
+      margin-top: 1.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .facilitator-name {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .screenshots {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin: 1.25rem 0 1.5rem;
+    }
+
+    .screenshots figure {
+      margin: 0;
+    }
+
+    .screenshots img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .screenshots figcaption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    @media print {
+      body { font-size: 10pt; }
+      .wrap { padding: 0; max-width: none; }
+      .btn-row, .copy-btn { display: none; }
+      pre.prompt { padding-top: 1rem; }
+      .track-accordion { border: 1px solid var(--border); }
+      .track-summary-aside { display: none; }
+      .track-accordion .track-panel { display: block !important; }
+      a { color: var(--text); text-decoration: underline; }
+      section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <nav class="lang" aria-label="Kieli">
+        <a href="en-workshop-guide.html" hreflang="en">English</a>
+        <a href="fi-workshop-guide.html" hreflang="fi" aria-current="page">Suomi</a>
+        <a href="sv-workshop-guide.html" hreflang="sv">Svenska</a>
+      </nav>
+      <p class="eyebrow">Seuraa mukana -opas</p>
+      <h1>Ideasta verkkosivuksi: Tekoälyavusteinen koodaus aloittelijoille</h1>
+      <p class="lede">Asenna OpenCode ja Neuralwatt ennen kuin aloitamme rakentamisen. Lisää tämä sivu kirjanmerkkeihin, jotta löydät sen helposti.</p>
+      <nav class="toc" aria-label="Tällä sivulla">
+        <a href="#opencode">OpenCode</a>
+        <a href="#neuralwatt">Neuralwatt</a>
+        <a href="#connect">Yhdistä ne</a>
+        <a href="#writing-prompts">Kehotteiden kirjoittaminen</a>
+        <a href="#prompts">Esimerkkikehotteet</a>
+        <a href="#during">Työpajan aikana</a>
+      </nav>
+    </header>
+
+    <section id="opencode">
+      <h2><span class="num" aria-hidden="true">1</span> Asenna OpenCode (työpöytäsovellus)</h2>
+      <p>
+        Käytämme <strong>OpenCodea</strong> — avoimen lähdekoodin tekoälykoodausagenttia, joka toimii terminaalissa, työpöytäsovelluksena ja IDE-laajennuksissa.
+        Tätä työpajaa varten asenna <strong>työpöytäsovellus</strong> (beta).
+      </p>
+
+      <div class="btn-row">
+        <a class="btn btn-primary" href="https://opencode.ai/download" target="_blank" rel="noopener noreferrer">Lataa OpenCode Desktop</a>
+        <a class="btn btn-secondary" href="https://opencode.ai/" target="_blank" rel="noopener noreferrer">Tietoa OpenCodesta</a>
+        <a class="btn btn-secondary" href="https://opencode.ai/docs" target="_blank" rel="noopener noreferrer">Dokumentaatio</a>
+      </div>
+
+      <h3>macOS</h3>
+      <ol>
+        <li>Avaa <a href="https://opencode.ai/download" target="_blank" rel="noopener noreferrer">opencode.ai/download</a></li>
+        <li>Lataa prosessorillesi sopiva versio (<strong>Apple Silicon</strong> tai <strong>Intel</strong>)</li>
+        <li>Avaa asennusohjelma ja vedä OpenCode Ohjelmat-kansioon</li>
+        <li>Salli sovellus ensimmäisellä käynnistyksellä, jos macOS pyytää</li>
+      </ol>
+
+      <h3>Windows</h3>
+      <ol>
+        <li><a href="https://opencode.ai/download" target="_blank" rel="noopener noreferrer">Lataussivulta</a> valitse <strong>Windows (x64)</strong></li>
+        <li>Suorita asennusohjelma loppuun</li>
+        <li>Käynnistä OpenCode Käynnistä-valikosta</li>
+      </ol>
+
+      <h3>Linux</h3>
+      <ol>
+        <li>Lataa <strong>.deb</strong>- tai <strong>.rpm</strong>-paketti <a href="https://opencode.ai/download" target="_blank" rel="noopener noreferrer">lataussivulta</a></li>
+        <li>Asenna paketinhallinnalla ja avaa OpenCode</li>
+      </ol>
+
+      <p class="note">Valinnainen: OpenCode on saatavilla myös terminaalisovelluksena (<code>curl -fsSL https://opencode.ai/install | bash</code>). Työpöytäsovellus riittää tähän työpajaan.</p>
+    </section>
+
+    <section id="neuralwatt">
+      <h2><span class="num" aria-hidden="true">2</span> Hanki Neuralwatt API-avain</h2>
+      <p>
+        <a href="https://portal.neuralwatt.com/" target="_blank" rel="noopener noreferrer">Neuralwatt Cloud</a> tarjoaa OpenAI-yhteensopivan rajapinnan koodausmalleille.
+        Rekisteröityminen on ilmaista — uudet tilit saavat <strong>$5 kokeilusaldoa</strong>, voimassa <strong>30 päivää</strong>.
+      </p>
+
+      <div class="btn-row">
+        <a class="btn btn-primary" href="https://portal.neuralwatt.com/auth/register" target="_blank" rel="noopener noreferrer">Luo ilmainen tili</a>
+        <a class="btn btn-secondary" href="https://portal.neuralwatt.com/" target="_blank" rel="noopener noreferrer">Neuralwatt-portaali</a>
+        <a class="btn btn-secondary" href="https://portal.neuralwatt.com/docs/integrations/opencode" target="_blank" rel="noopener noreferrer">OpenCode-integraatio</a>
+      </div>
+
+      <h3>Luo API-avain</h3>
+      <ol>
+        <li>Mene osoitteeseen <a href="https://portal.neuralwatt.com/auth/register" target="_blank" rel="noopener noreferrer">portal.neuralwatt.com/auth/register</a> ja luo tili</li>
+        <li>Kirjaudu portaaliin ja avaa <strong>Dashboard → API Keys</strong></li>
+        <li>Napsauta <strong>Create Key</strong>, anna avaimelle nimi (esim. <code>workshop</code>)</li>
+        <li>Kopioi avain ja säilytä sitä turvallisesti — et näe koko avainta uudelleen</li>
+      </ol>
+
+      <div class="card highlight">
+        <p class="card-title">Kokeilusaldo työpajaa varten</p>
+        <p style="margin:0">
+          <strong>$5 kokeilusaldo</strong> on voimassa <strong>30 päivää</strong> rekisteröitymisestä — riittää tämän päivän harjoituksiin ja jatkoharjoitteluun.
+          Neuralwatt käyttää energiapohjaista hinnoittelua; tarkista käyttösi portaalin hallintapaneelista, jos haluat nähdä jäljellä olevan saldon.
+        </p>
+      </div>
+
+      <p class="note warn">
+        <strong>Pidä avain yksityisenä.</strong> Älä liitä sitä chattiin, dioihin tai GitHubiin. Kohtele sitä kuten salasanaa.
+      </p>
+    </section>
+
+    <section id="connect">
+      <h2><span class="num" aria-hidden="true">3</span> Yhdistä OpenCode Neuralwattiin</h2>
+      <p>Kun OpenCode on asennettu ja sinulla on Neuralwatt API-avain, yhdistä se työpöytäsovelluksessa — konfiguraatiotiedostoja tai ympäristömuuttujia ei tarvita.</p>
+
+      <h3>OpenCode Desktopissa</h3>
+      <ol>
+        <li>Avaa OpenCode ja napsauta sivupalkissa <strong>asetukset</strong>-kuvaketta (ratas)</li>
+        <li>Valitse <strong>Server</strong>-kohdasta <strong>Providers</strong></li>
+        <li>Etsi <strong>Neuralwatt</strong> ja napsauta sen vieressä olevaa <strong>+</strong>-painiketta</li>
+        <li>Liitä API-avaimesi ja napsauta <strong>Continue</strong></li>
+        <li>Napsauta chattiruudun alapuolella olevaa <strong>mallin nimeä</strong> (<strong>Build</strong>-kohdan vieressä), etsi <strong>Neuralwatt</strong>-kohdasta ja valitse <strong>Kimi K2.6</strong> — sitä mallia käytämme tämän päivän työpajassa</li>
+      </ol>
+
+      <p class="note">Käytä <strong>Kimi K2.6</strong>-mallia kaikissa tämän päivän harjoituksissa, jotta kaikilla on sama asetus. Voit kokeilla muita Neuralwatt-malleja myöhemmin mallivalitsimesta.</p>
+
+      <div class="screenshots">
+        <figure>
+          <img
+            src="assets/opencode-connect-provider-neuralwatt.png"
+            alt="OpenCoden yhdistä palveluntarjoaja -valintaikkuna, jossa Neuralwatt on korostettu hakutuloksissa"
+            width="681"
+            height="367"
+            loading="lazy"
+          />
+          <figcaption>Etsi Neuralwatt ja napsauta <strong>+</strong> lisätäksesi palveluntarjoajan</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="assets/opencode-connect-neuralwatt-api-key.png"
+            alt="OpenCoden Neuralwatt-yhdistämisikkuna API-avainkentällä ja Continue-painikkeella"
+            width="681"
+            height="389"
+            loading="lazy"
+          />
+          <figcaption>Liitä Neuralwatt API-avaimesi ja napsauta <strong>Continue</strong></figcaption>
+        </figure>
+      </div>
+
+      <p class="note">
+        Lisätietoja: <a href="https://portal.neuralwatt.com/docs/integrations/opencode" target="_blank" rel="noopener noreferrer">Neuralwatt × OpenCode -opas</a>
+        ja <a href="https://opencode.ai/docs/providers" target="_blank" rel="noopener noreferrer">OpenCoden palveluntarjoaja-dokumentaatio</a>.
+      </p>
+
+      <h3 id="quick-test">Pikatesti</h3>
+      <p>Kun yhteys on valmis, kopioi tämä kehote OpenCodeen — tee tämä ennen osion 5 polkukehotteita:</p>
+      <p class="prompt-step">Pikatesti — kokeile tätä ensin</p>
+      <pre class="prompt">Luo yksisivuinen HTML-tiedosto nimeltä index.html, jossa on otsikko "Hei, sivuni" ja lyhyt kappale minusta. Käytä selkeää, yksinkertaista tyyliä.</pre>
+    </section>
+
+    <section id="writing-prompts">
+      <h2><span class="num" aria-hidden="true">4</span> Kehotteiden kirjoittaminen</h2>
+      <p>
+        Tekoäly toimii parhaiten, kun kirjoitat kuin ohjeistaisit avuliaan tiimikaverin: selkeä tavoite, riittävästi kontekstia ja yksi pyyntö kerrallaan.
+      </p>
+
+      <div class="card highlight">
+        <p class="card-title">Mikä tekee hyvän kehotteen</p>
+        <ul>
+          <li><strong>Kerro mitä haluat</strong> — esim. "yksisivuinen portfolio tiedostoon <code>index.html</code>" tai "ravintolasivusto valikolla ja aukioloajoilla".</li>
+          <li><strong>Aseta rajat</strong> — "Käytä vain HTML:ää ja CSS:ää, ei kehyksiä" tai "vain yksi tiedosto".</li>
+          <li><strong>Anna oikeat tietosi</strong> — korvaa <code>[hakasulkeet]</code> nimelläsi, menu-kohteilla, väreillä tai tekstillä.</li>
+          <li><strong>Pyydä pieniä vaiheita</strong> — ensin luonnos, sitten sisältö, sitten ulkoasu, sitten mobiilikorjaukset.</li>
+          <li><strong>Jaa mitä näet</strong> — jos jokin menee rikki, liitä virheilmoitus tai kuvaile mikä näyttää väärältä ruudullasi.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Lauseita, joita voit käyttää uudelleen</p>
+        <ul>
+          <li>"Kysy minulta kysymyksiä ennen kuin kirjoitat mitään koodia."</li>
+          <li>"Anna ensin suunnitelma ja odota hyväksyntääni."</li>
+          <li>"Tee pienin mahdollinen muutos — älä kirjoita koko sivua uudelleen."</li>
+          <li>"Selitä yksinkertaisesti mitä muutit."</li>
+          <li>"Tässä on virhe. Diagnosoi ennen korjaamista."</li>
+        </ul>
+      </div>
+
+      <p class="note">
+        <strong>Heikko:</strong> "Tee verkkosivustostani parempi."<br />
+        <strong>Vahva:</strong> "Paranna <code>index.html</code>-tiedoston hero-osaa: isompi otsikko, enemmän väliä, säilytä nykyinen teksti, mobiiliystävällinen."
+      </p>
+
+      <p class="note">
+        <strong>Vinkki:</strong> Suuremmissa ominaisuuksissa vaihda <strong>Plan mode</strong> -tilaan (Tab-näppäin), tarkista suunnitelma, palaa Build-tilaan ja sano "Jatka.".
+        Pysyt ohjaksissa — lue vastaus, testaa selaimessa ja lähetä seuraava kehote.
+      </p>
+    </section>
+
+    <section id="prompts">
+      <h2><span class="num" aria-hidden="true">5</span> Esimerkkikehotteet</h2>
+      <p>
+        Valitse <strong>yksi polku</strong> alta. Kopioi jokainen kehote OpenCodeen järjestyksessä.
+        Korvaa kaikki <code>[hakasulkeissa]</code> olevat tiedot omillasi ennen lähettämistä.
+      </p>
+
+      <div class="tracks-accordion">
+      <details class="track-accordion" name="prompt-tracks">
+        <summary>
+          <span class="track-summary-text">
+            <p class="track-label">Polku A — Henkilökohtainen portfolio</p>
+            <p class="track-summary-hint">Sopii opiskelijoille, freelancereille ja uraa vaihtaville, jotka esittelevät työtään.</p>
+          </span>
+          <span class="track-summary-aside">
+            <span class="track-expand-hint"><span class="hint-closed">Avaa napsauttamalla</span><span class="hint-open">Sulje napsauttamalla</span></span>
+          </span>
+        </summary>
+        <div class="track-panel">
+
+        <p class="prompt-step">Vaihe 1 — Ensimmäinen luonnos</p>
+        <pre class="prompt">Luo yksisivuinen portfolio-verkkosivusto yhteen tiedostoon: index.html.
+
+Käytä vain HTML:ää ja CSS:ää (ei kehyksiä). Sisällytä nämä osiot:
+- Hero-osio nimelläni [Nimesi], lyhyellä iskulauseella [esim. "Aloitteleva web-kehittäjä"] ja ystävällinen kuvapaikka
+- Tietoa minusta (3–4 lausetta tästä tiedosta: [liitä lyhyt esittely])
+- Taidot (6–8 taitoa tageina tai yksinkertaisena listana: [esim. viestintä, asiakaspalvelu, Canva])
+- Projektit (2–3 projektikorttia otsikolla, yhden lauseen kuvauksella ja "Katso" -linkkipaikalla)
+- Yhteystiedot (sähköposti [sinun@email.com] ja linkit [LinkedIn / GitHub / valinnainen])
+
+Tyyli: selkeä, moderni, paljon tyhjää tilaa, luettavat fontit, mobiiliystävällinen. Käytä rauhallista väripalettia yhdellä korostusvärillä.</pre>
+
+        <p class="prompt-step">Vaihe 2 — Tee siitä omasi</p>
+        <pre class="prompt">Päivitä index.html oikealla sisällölläni:
+- Nimi: [Nimesi]
+- Iskulause: [Iskulauseesi]
+- Tietoa minusta: [Esittelykappaleesi]
+- Taidot: [listaa taitosi]
+- Projektit: [Projekti 1 otsikko + kuvaus], [Projekti 2 otsikko + kuvaus]
+- Sähköposti: [sinun@email.com]
+
+Säilytä sama asettelu. Paranna typografiaa niin, että otsikot erottuvat ja leipäteksti on helppolukuista.</pre>
+
+        <p class="prompt-step">Vaihe 3 — Viimeistele ulkoasu</p>
+        <pre class="prompt">Paranna index.html:n visuaalista ulkoasua muuttamatta tekstiäni:
+- Lisää hienovaraiset hover-efektit painikkeisiin ja projektikortteihin
+- Käytä johdonmukaista välistysjärjestelmää (padding/margins)
+- Lisää yläreunaan yksinkertainen navigaatiopalkki, joka linkittää jokaiseen osioon (Tietoa, Taidot, Projektit, Yhteystiedot)
+- Tee hero-osiosta tervetullut, ei ahdas
+
+Kerro selkokielellä mitä muutit.</pre>
+
+        <p class="prompt-step">Vaihe 4 — Mobiilitarkistus</p>
+        <pre class="prompt">Tee index.html:stä hieno puhelimilla:
+- Pinota osiot pystysuunnassa mukavalla paddingilla
+- Varmista, että teksti on mobiilissa vähintään 16px
+- Tee napautuskohteista (linkit, painikkeet) helppoja painaa
+- Testaa, ettei mikään ylitä vaakasuunnassa
+
+Selitä mobiiliin lisäämäsi CSS.</pre>
+
+        <p class="prompt-step">Vaihe 5 — Korjaa ja iteroi (käytä milloin tahansa)</p>
+        <pre class="prompt">[Osion nimi] -osio ei näytä oikealta ruudullani. [Kuvaile mitä näet, esim. "teksti on liian pientä" tai "kortit menevät päällekkäin"].
+
+Tee pienin mahdollinen korjaus. Älä kirjoita koko sivua uudelleen.</pre>
+        </div>
+      </details>
+
+      <details class="track-accordion" name="prompt-tracks">
+        <summary>
+          <span class="track-summary-text">
+            <p class="track-label">Polku B — Yrityksen aloitussivu</p>
+            <p class="track-summary-hint">Sopii pienyrittäjille, jotka haluavat asiakkaiden löytävän aukioloajat, valikon ja miten vierailla tai tilata.</p>
+          </span>
+          <span class="track-summary-aside">
+            <span class="track-expand-hint"><span class="hint-closed">Avaa napsauttamalla</span><span class="hint-open">Sulje napsauttamalla</span></span>
+          </span>
+        </summary>
+        <div class="track-panel">
+
+        <p class="note">Etkö ole ravintola? Säilytä samat vaiheet — vaihda valikko palveluihin/tuotteisiin ja aukioloajat siihen, miten asiakkaat tavoittavat sinut.</p>
+
+        <p class="prompt-step">Vaihe 1 — Ensimmäinen luonnos</p>
+        <pre class="prompt">Luo yksisivuinen ravintola-verkkosivusto yhteen tiedostoon: index.html.
+
+Käytä vain HTML:ää ja CSS:ää (ei kehyksiä). Ravintolan tiedot:
+- Nimi: [Ravintolan nimi]
+- Iskulause: [esim. "Tuoretta pastaa ja puu-uunipizzaa keskustassa"]
+- Keittiötyyppi: [esim. italialainen, kahvila]
+- Osoite: [katu, kaupunki]
+- Puhelin: [puhelinnumero]
+- Aukioloajat: [esim. ma–la 11–21, su 12–20]
+
+Sisällytä nämä osiot:
+1. Hero ravintolan nimellä, iskulauseella ja kahdella painikkeella: "Katso valikko" ja "Soita / Varaa"
+2. Tietoa (lämpimät 2–3 lausetta ravintolasta)
+3. Valikon kohokohdat (4–6 suosittua annosta lyhyillä kuvauksilla ja hinnoilla valuutassa [valuutta])
+4. Aukioloajat ja sijainti (osoite, aukioloajat, upotettu karttapaikka tai "Hae reittiohjeet" -linkki Google Mapsiin)
+5. Yhteystiedot ja some (puhelin, sähköposti valinnainen, Instagram/Facebook-paikat)
+
+Tyyli: herkullinen ja luotettava — hyvät ruokakuvapaikat, selkeä typografia, toimii mobiilissa.</pre>
+
+        <p class="prompt-step">Vaihe 2 — Oikea valikko ja tiedot</p>
+        <pre class="prompt">Päivitä index.html oikeilla tiedoillamme:
+
+Ravintola: [Ravintolan nimi]
+Tietoa: [2–3 lausetta tarinastanne, kokkista tai erikoisuudesta]
+
+Valikkokohteet (käytä näitä tarkalleen):
+1. [Annos] — [hinta] — [yhden lauseen kuvaus]
+2. [Annos] — [hinta] — [kuvaus]
+3. [Annos] — [hinta] — [kuvaus]
+4. [Annos] — [hinta] — [kuvaus]
+5. [Annos] — [hinta] — [kuvaus]
+6. [Annos] — [hinta] — [kuvaus]
+
+Aukioloajat: [aukioloajat]
+Osoite: [koko osoite]
+Puhelin: [puhelin]
+Varausohje: [esim. "Kävelyasiakkaat tervetulleita" tai "Varaa puhelimitse"]
+
+Säilytä yksi sivu. Tee hinnoista helposti luettavia.</pre>
+
+        <p class="prompt-step">Vaihe 3 — Auta asiakkaita toimimaan</p>
+        <pre class="prompt">Paranna index.html:ää niin, että asiakkaat tietävät mitä tehdä seuraavaksi:
+- "Katso valikko" vierittää sujuvasti valikko-osioon
+- "Soita / Varaa" käyttää tel:[puhelin], jotta mobiilikäyttäjät voivat soittaa napauttamalla
+- Lisää kiinteä tai yläreunan navigaatio: Valikko, Aukioloajat, Sijainti, Yhteystiedot
+- Lisää lyhyt rivi [kotiinkuljetus / nouto / ravintolassa syöminen, jos soveltuu]
+
+Älä muuta valikkotekstiämme. Keskity selkeyteen ja toimintakehotuksiin.</pre>
+
+        <p class="prompt-step">Vaihe 4 — Ammattimainen ilme</p>
+        <pre class="prompt">Tee ravintolasivustosta premium-tuntuinen ja paikallinen:
+- Valitse väripaletti, joka sopii [keittiötyyppiin] (lämpimät sävyt leipomolle, raikkaat vihreät terveelle jne.)
+- Käytä laadukkaita kuvapaikkoja hero-osioon ja 2–3 annokseen (placeholder-URL:t käyvät)
+- Lisää yksinkertainen alatunniste tekijänoikeuksilla, osoitteella ja toistetuilla aukioloajoilla
+
+Säilytä kaikki sisältö yhdessä index.html-tiedostossa.</pre>
+
+        <p class="prompt-step">Vaihe 5 — Korjaa ja iteroi (käytä milloin tahansa)</p>
+        <pre class="prompt">Mobiilissa [kuvaile ongelma — esim. "valikon hinnat rivittyvät huonosti" tai "Soita-painike on vaikea napauttaa"].
+
+Korjaa vain tämä ongelma index.html:ssä. Näytä tarkalleen mitä CSS:ää muutit.</pre>
+        </div>
+      </details>
+
+      <details class="track-accordion" name="prompt-tracks">
+        <summary>
+          <span class="track-summary-text">
+            <p class="track-label">Bonuskehotteet — Molemmat polut</p>
+            <p class="track-summary-hint">Käytä milloin tahansa kummassakin polussa.</p>
+          </span>
+          <span class="track-summary-aside">
+            <span class="track-expand-hint"><span class="hint-closed">Avaa napsauttamalla</span><span class="hint-open">Sulje napsauttamalla</span></span>
+          </span>
+        </summary>
+        <div class="track-panel">
+        <p class="prompt-step">Lisää kuva</p>
+        <pre class="prompt">Lisää kuva [osion nimi] -osioon. Käytän tätä kuvan URL:ää: [liitä linkki] tai paikkakuvaa. Pidä se responsiivisena ja lisää alt-teksti saavutettavuutta varten.</pre>
+        <p class="prompt-step">Selitä koodi</p>
+        <pre class="prompt">Selitä index.html yksinkertaisesti aloittelijalle. Mitä kukin pääosa tekee? Mitä minun pitäisi muokata, jos haluan vaihtaa puhelinnumeroni tai valikon hinnan?</pre>
+        <p class="prompt-step">Turvallinen pieni muutos</p>
+        <pre class="prompt">Vaihda vain korostusväri arvoon [värin nimi tai hex] ja pääotsikon fonttityyli. Älä muuta asettelua tai kirjoita osioita uudelleen.</pre>
+        </div>
+      </details>
+      </div>
+    </section>
+
+    <section id="during">
+      <h2><span class="num" aria-hidden="true">6</span> Työpajan aikana</h2>
+
+      <div class="card">
+        <p class="card-title">Näin työskentelemme tekoälyn kanssa</p>
+        <ol>
+          <li>Kuvaile tavoite selkeästi (mitä sivun pitää tehdä)</li>
+          <li>Tarkista tekoälyn ehdotukset ennen suurten muutosten hyväksymistä</li>
+          <li>Avaa sivusto selaimessa usein</li>
+          <li>Jos jokin menee rikki, liitä virheilmoitus takaisin tekoälylle</li>
+          <li>Iteroi pienin askelin — sinä pidät ohjat käsissä</li>
+        </ol>
+      </div>
+
+      <h3>Hyödylliset OpenCode-komennot</h3>
+      <ul>
+        <li><strong>Settings → Providers</strong> — lisää tai vaihda tekoälypalveluntarjoaja (esim. Neuralwatt)</li>
+        <li><strong>Model picker</strong> (chattiruudun alapuolella) — pitäisi näyttää <strong>Kimi K2.6</strong> Neuralwatt-kohdassa tänään</li>
+        <li><kbd>/init</kbd> — auttaa OpenCodea ymmärtämään projektisi (aja kerran per kansio)</li>
+        <li><kbd>/undo</kbd> — peru viimeisin muutos</li>
+      </ul>
+
+      <h3>Jos jokin menee pieleen</h3>
+      <ul>
+        <li><strong>Todennusvirheet</strong> — avaa <strong>Settings → Providers → Neuralwatt</strong> ja liitä API-avain uudelleen</li>
+        <li><strong>Saldo loppunut (Neuralwatt)</strong> — tarkista saldo portaalin hallintapaneelista; kokeilusaldo kestää 30 päivää</li>
+        <li><strong>Mallia ei löydy</strong> — napsauta chattiruudun alapuolella olevaa mallin nimeä, etsi <strong>Kimi K2.6</strong> Neuralwatt-kohdasta ja valitse se listasta (älä kirjoita mallitunnuksia käsin)</li>
+        <li>Kysy fasilitaattorilta — olemme täällä auttamassa</li>
+      </ul>
+    </section>
+
+    <footer>
+      <div class="footer-section">
+        <p><strong>Pikalinkit</strong></p>
+        <ul>
+          <li><a href="https://opencode.ai/download">OpenCode-lataus</a></li>
+          <li><a href="https://opencode.ai/docs">OpenCode-dokumentaatio</a></li>
+          <li><a href="https://portal.neuralwatt.com/auth/register">Neuralwatt — luo tili</a></li>
+          <li><a href="https://portal.neuralwatt.com/docs/integrations/opencode">Neuralwatt × OpenCode -asennus</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <p><strong>Ilmaiset tekoälykurssit</strong></p>
+        <p class="footer-note">Jatka oppimista työpajan jälkeen — ilmainen liittyminen; luo tili kummallekin sivustolle.</p>
+        <ul>
+          <li>
+            <a href="https://anthropic.skilljar.com/" target="_blank" rel="noopener noreferrer">Anthropic Academy</a>
+            — Clauden perusteet, Claude Code, tekoälyosaaminen, MCP ja muuta
+          </li>
+          <li>
+            <a href="https://academy.openai.com/" target="_blank" rel="noopener noreferrer">OpenAI Academy</a>
+            — oppaita, live-tapahtumia ja yhteisöoppimista
+          </li>
+        </ul>
+      </div>
+
+      <div class="facilitator">
+        <p class="facilitator-name">Mchael Poncardas</p>
+        <p>Työpajan fasilitaattori</p>
+        <ul>
+          <li>Sähköposti: <a href="mailto:m@poncardas.com">m@poncardas.com</a></li>
+          <li>Verkkosivusto: <a href="https://www.poncardas.com" target="_blank" rel="noopener noreferrer">poncardas.com</a></li>
+          <li>LinkedIn: <a href="https://linkedin.com/in/poncardas" target="_blank" rel="noopener noreferrer">linkedin.com/in/poncardas</a></li>
+        </ul>
+      </div>
+      <p style="margin-top:1rem">Tekoälykoodaus-työpaja · Aiempaa koodauskokemusta ei tarvita</p>
+    </footer>
+  </div>
+  <script>
+    (function () {
+      document.querySelectorAll("pre.prompt").forEach(function (pre) {
+        var block = document.createElement("div");
+        block.className = "prompt-block";
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "copy-btn";
+        btn.textContent = "Kopioi";
+        btn.setAttribute("aria-label", "Kopioi kehote leikepöydälle");
+        pre.parentNode.insertBefore(block, pre);
+        block.append(btn, pre);
+      });
+
+      document.body.addEventListener("click", function (e) {
+        var btn = e.target.closest(".copy-btn");
+        if (!btn) return;
+
+        var pre = btn.parentElement.querySelector("pre.prompt");
+        if (!pre) return;
+
+        var text = pre.textContent.trim();
+
+        function showCopied() {
+          btn.textContent = "Kopioitu!";
+          btn.classList.add("copied");
+          btn.setAttribute("aria-label", "Kopioitu leikepöydälle");
+          window.setTimeout(function () {
+            btn.textContent = "Kopioi";
+            btn.classList.remove("copied");
+            btn.setAttribute("aria-label", "Kopioi kehote leikepöydälle");
+          }, 2000);
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showCopied).catch(fallbackCopy);
+        } else {
+          fallbackCopy();
+        }
+
+        function fallbackCopy() {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          ta.setAttribute("readonly", "");
+          ta.style.position = "fixed";
+          ta.style.left = "-9999px";
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand("copy");
+            showCopied();
+          } catch (err) {
+            btn.textContent = "Epäonnistui";
+            window.setTimeout(function () {
+              btn.textContent = "Kopioi";
+            }, 2000);
+          }
+          document.body.removeChild(ta);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

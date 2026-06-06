@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Från idé till webbplats: AI-kodning för nybörjare</title>
+  <link rel="alternate" hreflang="en" href="en-workshop-guide.html" />
+  <link rel="alternate" hreflang="fi" href="fi-workshop-guide.html" />
+  <link rel="alternate" hreflang="sv" href="sv-workshop-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="en-workshop-guide.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Akt:wght@100..900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #faf9f5;
+      --text: #141413;
+      --muted: #5e5d59;
+      --dim: #8a8880;
+      --surface: #e8e6dc;
+      --border: rgba(20, 20, 19, 0.12);
+      --accent: #d97757;
+      --accent-soft: rgba(217, 119, 87, 0.14);
+      --green: #788c5d;
+      --blue: #6a9bcc;
+      --radius: 10px;
+      --max: 720px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Akt", system-ui, sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    header {
+      margin-bottom: 2.25rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: clamp(1.75rem, 5vw, 2.25rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+    }
+
+    .lede {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    nav.toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+
+    nav.toc a {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--text);
+      background: var(--surface);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    nav.toc a:hover {
+      background: var(--accent-soft);
+      border-color: rgba(217, 119, 87, 0.35);
+    }
+
+    nav.lang {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    nav.lang a {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--muted);
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    nav.lang a:hover {
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    nav.lang a[aria-current="page"] {
+      color: var(--text);
+      font-weight: 600;
+      background: var(--accent-soft);
+      border-color: rgba(217, 119, 87, 0.35);
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    h2 .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.65rem;
+      height: 1.65rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      flex-shrink: 0;
+      position: relative;
+      top: -0.05em;
+    }
+
+    h3 {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 1.25rem 0 0.5rem;
+    }
+
+    p { margin-bottom: 0.85rem; }
+    p:last-child { margin-bottom: 0; }
+
+    ul, ol {
+      margin: 0 0 1rem 1.25rem;
+    }
+
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    a {
+      color: var(--accent);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+
+    a:hover { text-decoration-thickness: 2px; }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.2rem;
+      margin: 1rem 0;
+    }
+
+    .card.highlight {
+      background: var(--accent-soft);
+      border-color: rgba(217, 119, 87, 0.25);
+    }
+
+    .card-title {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 1rem 0;
+    }
+
+    .btn {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.55rem 1rem;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(217, 119, 87, 0.35);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    code, kbd {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.88em;
+      background: var(--surface);
+      padding: 0.12em 0.4em;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    kbd {
+      font-size: 0.82em;
+      box-shadow: 0 1px 0 var(--border);
+    }
+
+    pre {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      background: var(--text);
+      color: #e8e6dc;
+      padding: 1rem 1.1rem;
+      border-radius: var(--radius);
+      overflow-x: auto;
+      margin: 0.75rem 0 1rem;
+    }
+
+    .note {
+      font-size: 0.92rem;
+      color: var(--muted);
+      border-left: 3px solid var(--blue);
+      padding-left: 0.85rem;
+      margin: 1rem 0;
+    }
+
+    .warn {
+      border-left-color: var(--accent);
+    }
+
+    .tracks-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-top: 1.25rem;
+    }
+
+    .track-accordion {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .track-accordion summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 1rem 1.15rem;
+      user-select: none;
+    }
+
+    .track-accordion summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .track-summary-aside {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.35rem;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding-top: 0.1rem;
+    }
+
+    .track-expand-hint {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--dim);
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .track-expand-hint .hint-open {
+      display: none;
+    }
+
+    .track-accordion[open] .track-expand-hint .hint-closed {
+      display: none;
+    }
+
+    .track-accordion[open] .track-expand-hint .hint-open {
+      display: inline;
+    }
+
+    .track-summary-aside::after {
+      content: "";
+      flex-shrink: 0;
+      width: 0.55rem;
+      height: 0.55rem;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg);
+      transition: transform 0.2s ease;
+    }
+
+    .track-accordion[open] .track-summary-aside::after {
+      transform: rotate(-135deg);
+    }
+
+    .track-accordion summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+
+    .track-summary-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .track-summary-text p {
+      margin: 0;
+    }
+
+    .track-label {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--green);
+      line-height: 1.35;
+      margin-bottom: 0.4rem;
+    }
+
+    .track-summary-hint {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .track-panel {
+      padding: 0 1.15rem 1.15rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .track-panel .prompt-step:first-child {
+      margin-top: 1rem;
+    }
+
+    .prompt-step {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 1.15rem 0 0.4rem;
+    }
+
+    .prompt-block {
+      position: relative;
+      margin: 0.5rem 0 1rem;
+    }
+
+    pre.prompt {
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+      padding: 2.75rem 1.1rem 1rem;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 0.55rem;
+      right: 0.55rem;
+      z-index: 1;
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1;
+      padding: 0.4rem 0.7rem;
+      border: 1px solid rgba(250, 249, 245, 0.2);
+      border-radius: 6px;
+      background: rgba(250, 249, 245, 0.12);
+      color: #e8e6dc;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .copy-btn:hover {
+      background: rgba(250, 249, 245, 0.22);
+      border-color: rgba(250, 249, 245, 0.35);
+    }
+
+    .copy-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .copy-btn.copied {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    footer ul {
+      list-style: none;
+      margin: 0.5rem 0 0;
+    }
+
+    footer li { margin-bottom: 0.3rem; }
+    footer li::marker { content: none; }
+
+    .footer-section {
+      margin-top: 1.35rem;
+    }
+
+    .footer-section > p:first-child {
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-note {
+      font-size: 0.86rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.45;
+    }
+
+    .facilitator {
+      margin-top: 1.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .facilitator-name {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .screenshots {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin: 1.25rem 0 1.5rem;
+    }
+
+    .screenshots figure {
+      margin: 0;
+    }
+
+    .screenshots img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .screenshots figcaption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    @media print {
+      body { font-size: 10pt; }
+      .wrap { padding: 0; max-width: none; }
+      .btn-row, .copy-btn { display: none; }
+      pre.prompt { padding-top: 1rem; }
+      .track-accordion { border: 1px solid var(--border); }
+      .track-summary-aside { display: none; }
+      .track-accordion .track-panel { display: block !important; }
+      a { color: var(--text); text-decoration: underline; }
+      section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <nav class="lang" aria-label="Språk">
+        <a href="en-workshop-guide.html" hreflang="en">English</a>
+        <a href="fi-workshop-guide.html" hreflang="fi">Suomi</a>
+        <a href="sv-workshop-guide.html" hreflang="sv" aria-current="page">Svenska</a>
+      </nav>
+      <p class="eyebrow">Följ med-guide</p>
+      <h1>Från idé till webbplats: AI-kodning för nybörjare</h1>
+      <p class="lede">Installera OpenCode och Neuralwatt innan vi börjar bygga. Bokmärk den här sidan för enkel åtkomst.</p>
+      <nav class="toc" aria-label="På den här sidan">
+        <a href="#opencode">OpenCode</a>
+        <a href="#neuralwatt">Neuralwatt</a>
+        <a href="#connect">Koppla ihop dem</a>
+        <a href="#writing-prompts">Skriva prompts</a>
+        <a href="#prompts">Exempelprompts</a>
+        <a href="#during">Under workshopen</a>
+      </nav>
+    </header>
+
+    <section id="opencode">
+      <h2><span class="num" aria-hidden="true">1</span> Installera OpenCode (skrivbordsapp)</h2>
+      <p>
+        Vi använder <strong>OpenCode</strong> — en AI-kodningsagent med öppen källkod som fungerar i terminalen, som skrivbordsapp och som IDE-tillägg.
+        För den här workshopen, installera <strong>skrivbordsappen</strong> (beta).
+      </p>
+
+      <div class="btn-row">
+        <a class="btn btn-primary" href="https://opencode.ai/download" target="_blank" rel="noopener noreferrer">Ladda ner OpenCode Desktop</a>
+        <a class="btn btn-secondary" href="https://opencode.ai/" target="_blank" rel="noopener noreferrer">Om OpenCode</a>
+        <a class="btn btn-secondary" href="https://opencode.ai/docs" target="_blank" rel="noopener noreferrer">Dokumentation</a>
+      </div>
+
+      <h3>macOS</h3>
+      <ol>
+        <li>Öppna <a href="https://opencode.ai/download" target="_blank" rel="noopener noreferrer">opencode.ai/download</a></li>
+        <li>Ladda ner versionen för din processor (<strong>Apple Silicon</strong> eller <strong>Intel</strong>)</li>
+        <li>Öppna installationsprogrammet och dra OpenCode till Program</li>
+        <li>Tillåt appen vid första start om macOS frågar</li>
+      </ol>
+
+      <h3>Windows</h3>
+      <ol>
+        <li>På <a href="https://opencode.ai/download" target="_blank" rel="noopener noreferrer">nedladdningssidan</a>, välj <strong>Windows (x64)</strong></li>
+        <li>Kör installationsprogrammet och slutför installationen</li>
+        <li>Starta OpenCode från Start-menyn</li>
+      </ol>
+
+      <h3>Linux</h3>
+      <ol>
+        <li>Ladda ner <strong>.deb</strong> eller <strong>.rpm</strong> från <a href="https://opencode.ai/download" target="_blank" rel="noopener noreferrer">nedladdningssidan</a></li>
+        <li>Installera med pakethanteraren och öppna sedan OpenCode</li>
+      </ol>
+
+      <p class="note">Valfritt: OpenCode finns också som terminalapp (<code>curl -fsSL https://opencode.ai/install | bash</code>). Skrivbordsappen räcker för idag.</p>
+    </section>
+
+    <section id="neuralwatt">
+      <h2><span class="num" aria-hidden="true">2</span> Skaffa en Neuralwatt API-nyckel</h2>
+      <p>
+        <a href="https://portal.neuralwatt.com/" target="_blank" rel="noopener noreferrer">Neuralwatt Cloud</a> tillhandahåller ett OpenAI-kompatibelt API för kodningsmodeller.
+        Registreringen är gratis — nya konton får <strong>$5 i testkredit</strong>, giltig i <strong>30 dagar</strong>.
+      </p>
+
+      <div class="btn-row">
+        <a class="btn btn-primary" href="https://portal.neuralwatt.com/auth/register" target="_blank" rel="noopener noreferrer">Skapa gratiskonto</a>
+        <a class="btn btn-secondary" href="https://portal.neuralwatt.com/" target="_blank" rel="noopener noreferrer">Neuralwatt-portalen</a>
+        <a class="btn btn-secondary" href="https://portal.neuralwatt.com/docs/integrations/opencode" target="_blank" rel="noopener noreferrer">OpenCode-integration</a>
+      </div>
+
+      <h3>Skapa din API-nyckel</h3>
+      <ol>
+        <li>Gå till <a href="https://portal.neuralwatt.com/auth/register" target="_blank" rel="noopener noreferrer">portal.neuralwatt.com/auth/register</a> och skapa ditt konto</li>
+        <li>Logga in i portalen och öppna <strong>Dashboard → API Keys</strong></li>
+        <li>Klicka på <strong>Create Key</strong>, ge den ett namn (t.ex. <code>workshop</code>)</li>
+        <li>Kopiera nyckeln och förvara den på ett säkert ställe — du ser inte hela nyckeln igen</li>
+      </ol>
+
+      <div class="card highlight">
+        <p class="card-title">Testkredit för workshopen</p>
+        <p style="margin:0">
+          Din <strong>$5 testkredit</strong> gäller i <strong>30 dagar</strong> från registrering — tillräckligt för dagens övningar och fortsatt övning.
+          Neuralwatt använder energibaserad prissättning; kontrollera din användning i portalens instrumentpanel om du vill se vad som återstår.
+        </p>
+      </div>
+
+      <p class="note warn">
+        <strong>Håll din nyckel privat.</strong> Klistra inte in den i chatt, presentationer eller GitHub. Behandla den som ett lösenord.
+      </p>
+    </section>
+
+    <section id="connect">
+      <h2><span class="num" aria-hidden="true">3</span> Koppla OpenCode till Neuralwatt</h2>
+      <p>När OpenCode är installerat och du har din Neuralwatt API-nyckel, koppla ihop dem i skrivbordsappen — inga konfigurationsfiler eller miljövariabler behövs.</p>
+
+      <h3>I OpenCode Desktop</h3>
+      <ol>
+        <li>Öppna OpenCode och klicka på <strong>inställningar</strong>-ikonen (kugghjul) i sidofältet</li>
+        <li>Under <strong>Server</strong>, klicka på <strong>Providers</strong></li>
+        <li>Sök efter <strong>Neuralwatt</strong> och klicka på <strong>+</strong> bredvid det</li>
+        <li>Klistra in din API-nyckel och klicka på <strong>Continue</strong></li>
+        <li>Klicka på <strong>modellnamnet</strong> under chattrutan (bredvid <strong>Build</strong>), sök under <strong>Neuralwatt</strong> och välj <strong>Kimi K2.6</strong> — den modellen använder vi i dagens workshop</li>
+      </ol>
+
+      <p class="note">Använd <strong>Kimi K2.6</strong> för alla övningar idag så att alla har samma uppsättning. Du kan prova andra Neuralwatt-modeller senare i modellväljaren.</p>
+
+      <div class="screenshots">
+        <figure>
+          <img
+            src="assets/opencode-connect-provider-neuralwatt.png"
+            alt="OpenCode-dialogen Anslut leverantör med Neuralwatt markerat i sökresultaten"
+            width="681"
+            height="367"
+            loading="lazy"
+          />
+          <figcaption>Sök efter Neuralwatt och klicka på <strong>+</strong> för att lägga till leverantören</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="assets/opencode-connect-neuralwatt-api-key.png"
+            alt="OpenCode-dialogen Anslut Neuralwatt med API-nyckelfält och Continue-knapp"
+            width="681"
+            height="389"
+            loading="lazy"
+          />
+          <figcaption>Klistra in din Neuralwatt API-nyckel och klicka på <strong>Continue</strong></figcaption>
+        </figure>
+      </div>
+
+      <p class="note">
+        Mer information: <a href="https://portal.neuralwatt.com/docs/integrations/opencode" target="_blank" rel="noopener noreferrer">Neuralwatt × OpenCode-guide</a>
+        och <a href="https://opencode.ai/docs/providers" target="_blank" rel="noopener noreferrer">OpenCodes leverantörsdokumentation</a>.
+      </p>
+
+      <h3 id="quick-test">Snabbtest</h3>
+      <p>När du är ansluten, kopiera den här prompten till OpenCode — gör detta innan spårpromptarna i avsnitt 5:</p>
+      <p class="prompt-step">Snabbtest — prova detta först</p>
+      <pre class="prompt">Skapa en ensides HTML-fil som heter index.html med en rubrik som säger "Hej, min sida" och ett kort stycke om mig. Använd en ren, enkel stil.</pre>
+    </section>
+
+    <section id="writing-prompts">
+      <h2><span class="num" aria-hidden="true">4</span> Skriva prompts</h2>
+      <p>
+        AI:n fungerar bäst när du skriver som om du briefar en hjälpsam kollega: tydligt mål, tillräckligt med kontext och en begäran i taget.
+      </p>
+
+      <div class="card highlight">
+        <p class="card-title">Vad som gör en bra prompt</p>
+        <ul>
+          <li><strong>Säg vad du vill ha</strong> — t.ex. "en ensides portfolio i <code>index.html</code>" eller "en restaurangsida med meny och öppettider".</li>
+          <li><strong>Sätt begränsningar</strong> — "Använd bara HTML och CSS, inga ramverk" eller "bara en fil".</li>
+          <li><strong>Ge dina riktiga uppgifter</strong> — ersätt <code>[hakparenteser]</code> med ditt namn, menyrätter, färger eller text.</li>
+          <li><strong>Begär små steg</strong> — först utkast, sedan innehåll, sedan design, sedan mobilfixar.</li>
+          <li><strong>Dela vad du ser</strong> — om något går sönder, klistra in felet eller beskriv vad som ser fel ut på skärmen.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Fraser du kan återanvända</p>
+        <ul>
+          <li>"Ställ frågor till mig innan du skriver någon kod."</li>
+          <li>"Ge mig en plan först och vänta på mitt godkännande."</li>
+          <li>"Gör den minsta ändringen som behövs — skriv inte om hela sidan."</li>
+          <li>"Förklara vad du ändrade på enkelt språk."</li>
+          <li>"Här är felet. Diagnostisera innan du fixar."</li>
+        </ul>
+      </div>
+
+      <p class="note">
+        <strong>Svag:</strong> "Gör min webbplats bättre."<br />
+        <strong>Stark:</strong> "Förbättra hero-sektionen i <code>index.html</code>: större rubrik, mer mellanrum, behåll min befintliga text, mobilvänlig."
+      </p>
+
+      <p class="note">
+        <strong>Tips:</strong> För större funktioner, byt till <strong>Plan mode</strong> (Tab-tangenten), granska planen, byt tillbaka till Build-läge och säg "Kör på.".
+        Du behåller kontrollen — läs svaret, testa i webbläsaren och skicka nästa prompt.
+      </p>
+    </section>
+
+    <section id="prompts">
+      <h2><span class="num" aria-hidden="true">5</span> Exempelprompts</h2>
+      <p>
+        Välj <strong>ett spår</strong> nedan. Kopiera varje prompt till OpenCode i ordning.
+        Ersätt allt i <code>[hakparenteser]</code> med dina egna uppgifter innan du skickar.
+      </p>
+
+      <div class="tracks-accordion">
+      <details class="track-accordion" name="prompt-tracks">
+        <summary>
+          <span class="track-summary-text">
+            <p class="track-label">Spår A — Personlig portfolio</p>
+            <p class="track-summary-hint">Bäst för studenter, frilansare och karriärbytare som vill visa upp sitt arbete.</p>
+          </span>
+          <span class="track-summary-aside">
+            <span class="track-expand-hint"><span class="hint-closed">Klicka för att expandera</span><span class="hint-open">Klicka för att fälla ihop</span></span>
+          </span>
+        </summary>
+        <div class="track-panel">
+
+        <p class="prompt-step">Steg 1 — Första utkastet</p>
+        <pre class="prompt">Skapa en ensides portfolio-webbplats i en fil: index.html.
+
+Använd bara HTML och CSS (inga ramverk). Inkludera dessa sektioner:
+- Hero med mitt namn [Ditt namn], en kort tagline [t.ex. "Aspirerande webbutvecklare"] och en vänlig bildplatshållare
+- Om mig (3–4 meningar med denna info: [klistra in en kort bio])
+- Färdigheter (6–8 färdigheter som taggar eller en enkel lista: [t.ex. kommunikation, kundservice, Canva])
+- Projekt (2–3 projektkort med titel, enmeningsbeskrivning och en "Visa"-länkplats)
+- Kontakt (e-post [din@email.com] och länkar till [LinkedIn / GitHub / valfritt])
+
+Stil: ren, modern, mycket vitt utrymme, läsbara typsnitt, mobilvänlig. Använd en lugn färgpalett med en accentfärg.</pre>
+
+        <p class="prompt-step">Steg 2 — Gör den till din</p>
+        <pre class="prompt">Uppdatera index.html med mitt riktiga innehåll:
+- Namn: [Ditt namn]
+- Tagline: [Din tagline]
+- Om mig: [Din biografiparagraf]
+- Färdigheter: [lista dina färdigheter]
+- Projekt: [Projekt 1 titel + beskrivning], [Projekt 2 titel + beskrivning]
+- Kontakt-e-post: [din@email.com]
+
+Behåll samma layout. Förbättra typografin så att rubriker sticker ut och brödtexten är lättläst.</pre>
+
+        <p class="prompt-step">Steg 3 — Finjustera designen</p>
+        <pre class="prompt">Förbättra den visuella designen av index.html utan att ändra min text:
+- Lägg till subtila hover-effekter på knappar och projektkort
+- Använd ett konsekvent avståndssystem (padding/margins)
+- Lägg till en enkel navigeringsfält högst upp som länkar till varje sektion (Om mig, Färdigheter, Projekt, Kontakt)
+- Gör hero-sektionen välkomnande, inte trång
+
+Visa mig vad du ändrade på enkelt språk.</pre>
+
+        <p class="prompt-step">Steg 4 — Mobiltest</p>
+        <pre class="prompt">Gör index.html snygg på telefoner:
+- Stapla sektioner vertikalt med bekvämt avstånd
+- Se till att texten är minst 16px på mobil
+- Gör tryckytor (länkar, knappar) lätta att trycka på
+- Testa att inget flödar över horisontellt
+
+Förklara all CSS du lade till för mobil.</pre>
+
+        <p class="prompt-step">Steg 5 — Fixa och iterera (använd när som helst)</p>
+        <pre class="prompt">Sektionen [sektionsnamn] ser inte rätt ut på min skärm. [Beskriv vad du ser, t.ex. "texten är för liten" eller "korten överlappar"].
+
+Gör den minsta ändringen som behövs för att fixa det. Skriv inte om hela sidan.</pre>
+        </div>
+      </details>
+
+      <details class="track-accordion" name="prompt-tracks">
+        <summary>
+          <span class="track-summary-text">
+            <p class="track-label">Spår B — Företagslandningssida</p>
+            <p class="track-summary-hint">Bäst för småföretagare som vill att kunder ska hitta öppettider, meny och hur man besöker eller beställer.</p>
+          </span>
+          <span class="track-summary-aside">
+            <span class="track-expand-hint"><span class="hint-closed">Klicka för att expandera</span><span class="hint-open">Klicka för att fälla ihop</span></span>
+          </span>
+        </summary>
+        <div class="track-panel">
+
+        <p class="note">Inte en restaurang? Behåll samma steg — byt meny mot tjänster/produkter och öppettider mot hur kunder når dig.</p>
+
+        <p class="prompt-step">Steg 1 — Första utkastet</p>
+        <pre class="prompt">Skapa en ensides restaurangwebbplats i en fil: index.html.
+
+Använd bara HTML och CSS (inga ramverk). Restauranguppgifter:
+- Namn: [Restaurangnamn]
+- Tagline: [t.ex. "Färsk pasta och vedugnsbakad pizza i centrum"]
+- Kökstyp: [t.ex. italienskt, café]
+- Adress: [gata, stad]
+- Telefon: [telefonnummer]
+- Öppettider: [t.ex. mån–lör 11–21, sön 12–20]
+
+Inkludera dessa sektioner:
+1. Hero med restaurangnamn, tagline och två knappar: "Se meny" och "Ring / Boka"
+2. Om oss (varma 2–3 meningar om restaurangen)
+3. Menyhöjdpunkter (4–6 populära rätter med korta beskrivningar och priser i [valuta])
+4. Öppettider och plats (adress, öppettider, inbäddad kartplatshållare eller "Hitta hit"-länk till Google Maps)
+5. Kontakt och sociala medier (telefon, e-post valfritt, Instagram/Facebook-platshållare)
+
+Stil: aptitlig och pålitlig — bra matfotoplatshållare, tydlig typografi, fungerar på mobil.</pre>
+
+        <p class="prompt-step">Steg 2 — Riktig meny och uppgifter</p>
+        <pre class="prompt">Uppdatera index.html med vår faktiska information:
+
+Restaurang: [Restaurangnamn]
+Om oss: [2–3 meningar om er historia, kock eller specialitet]
+
+Menyrätter (använd dessa exakt):
+1. [Rätt] — [pris] — [enradig beskrivning]
+2. [Rätt] — [pris] — [beskrivning]
+3. [Rätt] — [pris] — [beskrivning]
+4. [Rätt] — [pris] — [beskrivning]
+5. [Rätt] — [pris] — [beskrivning]
+6. [Rätt] — [pris] — [beskrivning]
+
+Öppettider: [dina öppettider]
+Adress: [fullständig adress]
+Telefon: [telefon]
+Bokningsnotering: [t.ex. "Drop-in välkommet" eller "Boka per telefon"]
+
+Behåll en sida. Gör priserna lätta att skanna.</pre>
+
+        <p class="prompt-step">Steg 3 — Hjälp kunder att agera</p>
+        <pre class="prompt">Förbättra index.html så att kunder vet vad de ska göra härnäst:
+- "Se meny" scrollar mjukt till menysektionen
+- "Ring / Boka" använder tel:[telefon] så mobilanvändare kan trycka för att ringa
+- Lägg till en fast eller övre navigering: Meny, Öppettider, Plats, Kontakt
+- Lägg till en kort rad om [leverans / avhämtning / äta på plats, om tillämpligt]
+
+Ändra inte vår menytext. Fokusera på tydlighet och uppmaningar till handling.</pre>
+
+        <p class="prompt-step">Steg 4 — Se professionell ut</p>
+        <pre class="prompt">Gör restaurangsidan mer premium och lokal:
+- Välj en färgpalett som passar [kökstyp] (varma toner för bageri, friska gröna för hälsosamt, etc.)
+- Använd högkvalitativa platshållarbilder för hero och 2–3 rätter (placeholder-URL:er fungerar)
+- Lägg till en enkel sidfot med upphovsrätt, adress och upprepade öppettider
+
+Behåll allt innehåll i en index.html-fil.</pre>
+
+        <p class="prompt-step">Steg 5 — Fixa och iterera (använd när som helst)</p>
+        <pre class="prompt">På mobil, [beskriv problemet — t.ex. "menypriserna radbryts dåligt" eller "Ring-knappen är svår att trycka på"].
+
+Fixa bara det problemet i index.html. Visa mig exakt vilken CSS du ändrade.</pre>
+        </div>
+      </details>
+
+      <details class="track-accordion" name="prompt-tracks">
+        <summary>
+          <span class="track-summary-text">
+            <p class="track-label">Bonusprompts — Båda spåren</p>
+            <p class="track-summary-hint">Använd när som helst med vilket spår som helst.</p>
+          </span>
+          <span class="track-summary-aside">
+            <span class="track-expand-hint"><span class="hint-closed">Klicka för att expandera</span><span class="hint-open">Klicka för att fälla ihop</span></span>
+          </span>
+        </summary>
+        <div class="track-panel">
+        <p class="prompt-step">Lägg till ett foto</p>
+        <pre class="prompt">Lägg till en bild i [sektionsnamn]. Jag använder denna bild-URL: [klistra in länk] eller en platshållare. Håll den responsiv och lägg till alt-text för tillgänglighet.</pre>
+        <p class="prompt-step">Förklara koden</p>
+        <pre class="prompt">Förklara index.html på enkelt språk för en nybörjare. Vad gör varje huvudsektion? Vad ska jag redigera om jag vill ändra mitt telefonnummer eller ett menypris?</pre>
+        <p class="prompt-step">Säker liten ändring</p>
+        <pre class="prompt">Ändra bara accentfärgen till [färgnamn eller hex] och huvudrubrikens typsnittsstil. Ändra inte layouten eller skriv om sektioner.</pre>
+        </div>
+      </details>
+      </div>
+    </section>
+
+    <section id="during">
+      <h2><span class="num" aria-hidden="true">6</span> Under workshopen</h2>
+
+      <div class="card">
+        <p class="card-title">Så arbetar vi med AI</p>
+        <ol>
+          <li>Beskriv målet tydligt (vad sidan ska göra)</li>
+          <li>Granska vad AI föreslår innan du accepterar stora ändringar</li>
+          <li>Öppna webbplatsen i webbläsaren ofta</li>
+          <li>Om något går sönder, klistra in felmeddelandet tillbaka till AI:n</li>
+          <li>Iterera i små steg — du har kontrollen</li>
+        </ol>
+      </div>
+
+      <h3>Användbara OpenCode-kommandon</h3>
+      <ul>
+        <li><strong>Settings → Providers</strong> — lägg till eller byt AI-leverantör (t.ex. Neuralwatt)</li>
+        <li><strong>Model picker</strong> (under chattrutan) — ska visa <strong>Kimi K2.6</strong> under Neuralwatt idag</li>
+        <li><kbd>/init</kbd> — hjälp OpenCode att förstå ditt projekt (kör en gång per mapp)</li>
+        <li><kbd>/undo</kbd> — ångra senaste ändringen</li>
+      </ul>
+
+      <h3>Om något går fel</h3>
+      <ul>
+        <li><strong>Autentiseringsfel</strong> — öppna <strong>Settings → Providers → Neuralwatt</strong> och klistra in API-nyckeln igen</li>
+        <li><strong>Slut på kredit (Neuralwatt)</strong> — kontrollera ditt saldo i portalens instrumentpanel; testkrediten gäller i 30 dagar</li>
+        <li><strong>Modellen hittades inte</strong> — klicka på modellnamnet under chattrutan, sök <strong>Kimi K2.6</strong> under Neuralwatt och välj den i listan (skriv inte modell-ID manuellt)</li>
+        <li>Fråga facilitatören — vi finns här för att hjälpa</li>
+      </ul>
+    </section>
+
+    <footer>
+      <div class="footer-section">
+        <p><strong>Snabblänkar</strong></p>
+        <ul>
+          <li><a href="https://opencode.ai/download">Ladda ner OpenCode</a></li>
+          <li><a href="https://opencode.ai/docs">OpenCode-dokumentation</a></li>
+          <li><a href="https://portal.neuralwatt.com/auth/register">Neuralwatt — skapa konto</a></li>
+          <li><a href="https://portal.neuralwatt.com/docs/integrations/opencode">Neuralwatt × OpenCode-installation</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <p><strong>Gratis AI-kurser</strong></p>
+        <p class="footer-note">Fortsätt lära efter workshopen — gratis att gå med; skapa konto på varje webbplats.</p>
+        <ul>
+          <li>
+            <a href="https://anthropic.skilljar.com/" target="_blank" rel="noopener noreferrer">Anthropic Academy</a>
+            — Claude-grunder, Claude Code, AI-kompetens, MCP med mera
+          </li>
+          <li>
+            <a href="https://academy.openai.com/" target="_blank" rel="noopener noreferrer">OpenAI Academy</a>
+            — guider, liveevenemang och community-lärande
+          </li>
+        </ul>
+      </div>
+
+      <div class="facilitator">
+        <p class="facilitator-name">Mchael Poncardas</p>
+        <p>Workshopfacilitatör</p>
+        <ul>
+          <li>E-post: <a href="mailto:m@poncardas.com">m@poncardas.com</a></li>
+          <li>Webbplats: <a href="https://www.poncardas.com" target="_blank" rel="noopener noreferrer">poncardas.com</a></li>
+          <li>LinkedIn: <a href="https://linkedin.com/in/poncardas" target="_blank" rel="noopener noreferrer">linkedin.com/in/poncardas</a></li>
+        </ul>
+      </div>
+      <p style="margin-top:1rem">AI-kodningsworkshop · Ingen tidigare kodningserfarenhet krävs</p>
+    </footer>
+  </div>
+  <script>
+    (function () {
+      document.querySelectorAll("pre.prompt").forEach(function (pre) {
+        var block = document.createElement("div");
+        block.className = "prompt-block";
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "copy-btn";
+        btn.textContent = "Kopiera";
+        btn.setAttribute("aria-label", "Kopiera prompt till urklipp");
+        pre.parentNode.insertBefore(block, pre);
+        block.append(btn, pre);
+      });
+
+      document.body.addEventListener("click", function (e) {
+        var btn = e.target.closest(".copy-btn");
+        if (!btn) return;
+
+        var pre = btn.parentElement.querySelector("pre.prompt");
+        if (!pre) return;
+
+        var text = pre.textContent.trim();
+
+        function showCopied() {
+          btn.textContent = "Kopierat!";
+          btn.classList.add("copied");
+          btn.setAttribute("aria-label", "Kopierat till urklipp");
+          window.setTimeout(function () {
+            btn.textContent = "Kopiera";
+            btn.classList.remove("copied");
+            btn.setAttribute("aria-label", "Kopiera prompt till urklipp");
+          }, 2000);
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showCopied).catch(fallbackCopy);
+        } else {
+          fallbackCopy();
+        }
+
+        function fallbackCopy() {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          ta.setAttribute("readonly", "");
+          ta.style.position = "fixed";
+          ta.style.left = "-9999px";
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand("copy");
+            showCopied();
+          } catch (err) {
+            btn.textContent = "Misslyckades";
+            window.setTimeout(function () {
+              btn.textContent = "Kopiera";
+            }, 2000);
+          }
+          document.body.removeChild(ta);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

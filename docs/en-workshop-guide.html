@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>From Idea to Website: AI Coding for Beginners</title>
+  <link rel="alternate" hreflang="en" href="en-workshop-guide.html" />
+  <link rel="alternate" hreflang="fi" href="fi-workshop-guide.html" />
+  <link rel="alternate" hreflang="sv" href="sv-workshop-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="en-workshop-guide.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Akt:wght@100..900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -93,6 +97,37 @@
     }
 
     nav.toc a:hover {
+      background: var(--accent-soft);
+      border-color: rgba(217, 119, 87, 0.35);
+    }
+
+    nav.lang {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    nav.lang a {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--muted);
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    nav.lang a:hover {
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    nav.lang a[aria-current="page"] {
+      color: var(--text);
+      font-weight: 600;
       background: var(--accent-soft);
       border-color: rgba(217, 119, 87, 0.35);
     }
@@ -498,6 +533,11 @@
 <body>
   <div class="wrap">
     <header>
+      <nav class="lang" aria-label="Language">
+        <a href="en-workshop-guide.html" hreflang="en" aria-current="page">English</a>
+        <a href="fi-workshop-guide.html" hreflang="fi">Suomi</a>
+        <a href="sv-workshop-guide.html" hreflang="sv">Svenska</a>
+      </nav>
       <p class="eyebrow">Follow-along guide</p>
       <h1>From Idea to Website: AI Coding for Beginners</h1>
       <p class="lede">Set up OpenCode and Neuralwatt before we start building. Bookmark this page for easy access.</p>

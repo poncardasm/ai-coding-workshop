@@ -1,6 +1,6 @@
 # Handout improvement notes
 
-Suggestions for `docs/handout.html` — prioritized for a live beginner workshop. Use this as a backlog when editing the handout.
+Suggestions for `docs/en-workshop-guide.html` — prioritized for a live beginner workshop. Use this as a backlog when editing the handout.
 
 ---
 
@@ -85,7 +85,7 @@ Useful when sharing the handout URL in email or chat before the event.
 
 ### 13. Hosting note for facilitators
 
-Images use relative paths (`assets/…`). Host so `handout.html` and `docs/assets/` stay together — e.g. serve from `docs/` on GitHub Pages, not the repo root, or screenshots 404.
+Images use relative paths (`assets/…`). Host so `en-workshop-guide.html` and `docs/assets/` stay together — e.g. serve from `docs/` on GitHub Pages, not the repo root, or screenshots 404.
 
 ---
 
@@ -167,7 +167,10 @@ If time is limited, do these first:
 
 | File                         | Role                                                   |
 | ---------------------------- | ------------------------------------------------------ |
-| `docs/handout.html`          | Participant follow-along                               |
+| `docs/workshop-guide.html`   | Language picker                                        |
+| `docs/en-workshop-guide.html`| English participant follow-along                       |
+| `docs/fi-workshop-guide.html`| Finnish participant follow-along                       |
+| `docs/sv-workshop-guide.html`| Swedish participant follow-along                       |
 | `docs/outline.md`            | Facilitator script and timing                          |
 | `slides/ai-coding-workshop/` | Presenter slides                                       |
-| `docs/assets/`               | Handout screenshots (must ship next to `handout.html`) |
+| `docs/assets/`               | Handout screenshots (must ship next to `en-workshop-guide.html`) |
