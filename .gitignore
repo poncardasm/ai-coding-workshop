@@ -24,10 +24,11 @@ pnpm-debug.log*
 # Dependencies
 node_modules/
 
-# Open Slide / build output
+# Build output
 dist/
 build/
 .vite/
+.astro/
 coverage/
 
 # Python

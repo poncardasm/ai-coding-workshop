@@ -1,0 +1,52 @@
+---
+import '../styles/picker.css';
+
+const languages = [
+  { code: 'en', label: 'English', meta: 'Follow-along guide', href: '/en/' },
+  { code: 'fi', label: 'Suomi', meta: 'Seuraa mukana -opas', href: '/fi/' },
+  { code: 'sv', label: 'Svenska', meta: 'Följ med-guide', href: '/sv/' },
+] as const;
+
+const alternates = languages.map(({ code, href }) => ({ lang: code, href }));
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Workshop Guide — Choose a language</title>
+    {alternates.map(({ lang, href }) => (
+      <link rel="alternate" hreflang={lang} href={href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href="/en/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <p class="eyebrow">Workshop materials</p>
+        <h1>From Idea to Website: AI Coding for Beginners</h1>
+        <p class="lede">Choose your language to open the follow-along guide.</p>
+      </header>
+
+      <ul class="lang-list">
+        {
+          languages.map(({ code, label, meta, href }) => (
+            <li>
+              <a href={href} hreflang={code}>
+                <span class="label">{label}</span>
+                <span class="meta">{meta}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </body>
+</html>

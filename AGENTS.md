@@ -1,32 +1,93 @@
-# open-slide — Agent Guide
+# AI Coding Workshop — Agent Guide
 
-You are authoring **slides** in this repo. Every slide is arbitrary React code that you write.
+This repo hosts the **participant follow-along guide** for *From Idea to Website: AI Coding for Beginners* — a beginner-friendly workshop on building a first website with AI coding tools (OpenCode + Neuralwatt).
+
+The site is a static [Astro](https://astro.build) app. There are no slides, no React app shell, and no backend.
+
+## Routes
+
+| Route | File | Purpose |
+| ----- | ---- | ------- |
+| `/` | `src/pages/index.astro` | Language picker |
+| `/en/` | `src/pages/en/index.astro` | English guide |
+| `/fi/` | `src/pages/fi/index.astro` | Finnish guide |
+| `/sv/` | `src/pages/sv/index.astro` | Swedish guide |
+
+Each language page wraps raw HTML from `src/content/<lang>.html` inside `src/layouts/GuideLayout.astro`.
+
+## Repository layout
+
+```
+src/
+  content/          # Guide body HTML (en, fi, sv)
+  layouts/          # GuideLayout.astro — head, hreflang, copy-button script
+  pages/            # Astro routes (index + per-language)
+  styles/
+    guide.css       # Guide page styles
+    picker.css      # Language-picker page styles
+public/
+  assets/           # Fonts and screenshots (served at /assets/…)
+docs/               # Facilitator notes + original HTML sources
+  outline.md        # Workshop script and timing
+  *-workshop-guide.html   # Standalone HTML sources (optional reference)
+  assets/           # Source screenshots + font for standalone HTML
+```
 
 ## Hard rules
 
-- Put your slide under `slides/<kebab-case-id>/`.
-- The entry is `slides/<id>/index.tsx`.
-- Put slide-specific images/videos/fonts under `slides/<id>/assets/`. For assets reused across decks or themes (logos, avatars), use the global `assets/` folder and import via `@assets/...`.
-- Do **not** touch `package.json`, `open-slide.config.ts`, or other slides.
-- Do not add dependencies. Use only `react` and standard web APIs.
+- **Edit guide copy** in `src/content/<lang>.html`. If you also maintain the standalone HTML in `docs/`, keep both in sync.
+- **Edit styles** in `src/styles/guide.css` (guide pages) or `src/styles/picker.css` (home page). Do not inline large style blocks in Astro files.
+- **Put deployable assets** (fonts, images) in `public/assets/`. Reference them as `/assets/…` in HTML.
+- **Language links** must point to `/en/`, `/fi/`, `/sv/` — not `.html` filenames.
+- **Do not add dependencies** unless clearly needed. Prefer plain HTML, CSS, and minimal Astro.
+- **Do not touch** `package.json` or `astro.config.mjs` unless the task requires it.
 
-## Which skill to use
+## Content model
 
-- **Drafting a new deck** — use the `create-slide` skill. It walks through scoping questions, structure, and hand-off.
-- **Applying inspector comments** (`@slide-comment` markers in a page) — use the `apply-comments` skill.
-- **Creating or extracting a theme** — use the `create-theme` skill. Themes live as markdown under `themes/<id>.md` and are read by `create-slide` before authoring.
-- **Resolving "this page" / "this element"** — when the user references the current slide or selection without naming it, consult the `current-slide` skill. It reads the dev server's `node_modules/.open-slide/current.json` to find which slide, page, and inspector-picked element they mean.
-- **Any other slide edit** — read the `slide-authoring` skill before writing. It is the technical reference for everything inside `slides/<id>/`: file contract, the 1920×1080 canvas, type scale, palette, layout, assets, self-review checklist, and anti-patterns. `create-slide` and `apply-comments` both defer to it for the *how*.
+Guide pages are not Markdown or MDX. Each language file is a self-contained HTML fragment (the `.wrap` div and everything inside it) imported via `?raw` and injected with `<Fragment set:html={content} />`.
 
-Keep this file short: hard rules only. All deeper guidance lives in the skills above.
+`GuideLayout.astro` owns:
+- `<html lang>` and `<title>`
+- `hreflang` alternate links
+- Google Fonts (Rubik) + local Alsina heading font (via `guide.css`)
+- Copy-to-clipboard buttons on `pre.prompt` blocks (inline script)
 
-## Updating skills
+When adding a new section, follow existing patterns: numbered `<section id="…">`, `.card`, `.note`, `.btn-row`, track accordions (`<details class="track-accordion">`), and `pre.prompt` blocks for copyable prompts.
 
-The skills above are managed by `@open-slide/core`. Do not edit them in place. To pull the latest versions:
+## Design tokens
 
+Defined in `src/styles/guide.css`:
+
+- Background `#faf9f5`, text `#141413`, accent `#d97757`
+- UI font: Rubik. Heading font: Alsina (`/assets/alsina-ultrajada.woff`)
+- Max content width: 720px
+
+Match these when adding or restyling content.
+
+## Common tasks
+
+| Task | Where to edit |
+| ---- | ------------- |
+| Change guide text | `src/content/<lang>.html` |
+| Add a screenshot | Copy to `public/assets/`, reference in content HTML |
+| Update TOC / nav labels | Header `<nav class="toc">` in each `src/content/<lang>.html` |
+| Change page title / meta | `title` const in `src/pages/<lang>/index.astro` |
+| Facilitator script / timing | `docs/outline.md` |
+| Planning / improvement notes | `docs/handout-improvements.md` |
+
+## Deployment
+
+- **Build output:** `dist/` (static HTML)
+- **Netlify:** `netlify.toml` runs `npm run build`, publishes `dist/`
+- **Vercel:** deploys the Astro static build from `dist/`
+
+## Commands
+
+```bash
+npm install
+npm run dev       # http://localhost:4321
+npm run build     # static site → dist/
+npm run preview   # preview production build
 ```
-pnpm up @open-slide/core
-pnpm sync:skills
-```
 
-`pnpm dev` will also detect drift on startup and offer to sync. `pnpm sync:skills --dry-run` (via `pnpm exec open-slide sync:skills --dry-run`) previews changes without writing.
+Requires Node **≥ 22.12**.

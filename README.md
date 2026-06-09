@@ -19,36 +19,36 @@ By the end of the workshop, each participant will have a working one-page websit
 - **Requirements:** Laptop, internet connection, and willingness to experiment
 - **Outcome:** Each participant leaves with a working personal portfolio or business landing page.
 
-## Repository Structure
+## Workshop Guide Site
 
-- `docs/` contains workshop planning notes and outlines.
-- `docs/workshop-guide.html` is the language picker for the participant guide. Available guides: `docs/en-workshop-guide.html` (English), `docs/fi-workshop-guide.html` (Finnish), and `docs/sv-workshop-guide.html` (Swedish). Open any in a browser or host them alongside the slides.
-- `slides/` contains Open Slide decks.
-- `themes/` contains optional shared Open Slide themes.
-- `assets/` can hold shared workshop assets.
+The participant follow-along guide is an [Astro](https://astro.build) static site with three language versions:
 
-## Slides
+| Route | Language |
+| ----- | -------- |
+| `/` | Language picker |
+| `/en/` | English |
+| `/fi/` | Finnish |
+| `/sv/` | Swedish |
 
-This repo uses [Open Slide](https://open-slide.dev/docs) for the React-based workshop slides. Each deck lives under `slides/<id>/index.tsx` and default-exports an array of page components.
+Source content lives in `src/content/` (converted from the original HTML in `docs/`). Shared styles are in `src/styles/guide.css`.
 
-Run the slide deck locally:
+Run locally:
 
 ```bash
 npm install
 npm run dev
 ```
 
-The Open Slide dev server runs on `http://localhost:5173` or the next available port.
+The dev server starts at `http://localhost:4321` by default.
 
-Useful scripts:
+| Command           | Description                    |
+| ----------------- | ------------------------------ |
+| `npm run dev`     | Start the Astro dev server     |
+| `npm run build`   | Build a static site to `dist/` |
+| `npm run preview` | Preview the production build   |
 
-| Command               | Description                                      |
-| --------------------- | ------------------------------------------------ |
-| `npm run dev`         | Start the Open Slide dev server with hot reload. |
-| `npm run build`       | Build a static slide bundle to `dist/`.          |
-| `npm run preview`     | Preview the built slide bundle locally.          |
-| `npm run sync:skills` | Sync Open Slide agent skills.                    |
+## Repository Structure
 
-## Open Slide Notes
-
-Every slide renders into a fixed **1920 x 1080** canvas. Slides are React components, not Markdown slides, so design with fixed presentation layouts rather than responsive web page layouts.
+- `src/` — Astro pages, layouts, styles, and guide content
+- `public/` — Static assets (fonts, screenshots)
+- `docs/` — Original HTML guides and workshop planning notes (source of truth for content edits; re-run conversion or edit `src/content/` directly)

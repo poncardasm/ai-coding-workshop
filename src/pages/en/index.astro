@@ -1,0 +1,11 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro';
+import content from '../../content/en.html?raw';
+
+const lang = 'en';
+const title = "From Idea to Website: AI Coding for Beginners";
+---
+
+<GuideLayout lang={lang} title={title}>
+  <Fragment set:html={content} />
+</GuideLayout>

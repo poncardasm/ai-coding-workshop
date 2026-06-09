@@ -1,0 +1,11 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro';
+import content from '../../content/fi.html?raw';
+
+const lang = 'fi';
+const title = "Ideasta verkkosivuksi: Tekoälyavusteinen koodaus aloittelijoille";
+---
+
+<GuideLayout lang={lang} title={title}>
+  <Fragment set:html={content} />
+</GuideLayout>

@@ -55,9 +55,9 @@ Consider anchors or nav labels for:
 - During session (sections 4–6)
 - Optional: `#quick-test` anchor under Connect
 
-### 7. Align “During the workshop” with slides
+### 7. Expand “During the workshop”
 
-Slides emphasize: not magic → workflow → prompting → pick track. Section 6 is thinner than sections 1–5. Add a small card mirroring the slide bullets so the room and handout stay in sync.
+Section 6 is thinner than sections 1–5. Add a small card covering the live-session flow: not magic → workflow → prompting → pick track.
 
 ### 8. Track B framing for non-restaurants — done
 
@@ -75,9 +75,9 @@ The handout is long (~900 lines). A slim sticky TOC or an “↑ Top” control 
 
 Example: **“Sections 1–3: about 15 minutes before we start.”** Sets expectations and reduces day-of panic.
 
-### 11. Typography alignment with slides — done
+### 11. Typography — done
 
-Slides and handout both use **Poppins** (headings/UI) + **Akt** (body).
+Guide uses **Rubik** (UI) + **Alsina** (headings).
 
 ### 12. `meta description` and favicon
 
@@ -109,7 +109,7 @@ Disable hover `transform` on buttons when the user prefers reduced motion.
 
 ### 17. “When AI is wrong” callout
 
-Short box aligned with slides:
+Short callout box:
 
 - Invented links, APIs, or files
 - Rewrites the whole page when you wanted a small fix
@@ -167,10 +167,10 @@ If time is limited, do these first:
 
 | File                         | Role                                                   |
 | ---------------------------- | ------------------------------------------------------ |
-| `docs/workshop-guide.html`   | Language picker                                        |
-| `docs/en-workshop-guide.html`| English participant follow-along                       |
-| `docs/fi-workshop-guide.html`| Finnish participant follow-along                       |
-| `docs/sv-workshop-guide.html`| Swedish participant follow-along                       |
+| `src/pages/`                 | Astro routes (`/`, `/en/`, `/fi/`, `/sv/`)             |
+| `src/content/`               | Guide body HTML per language                           |
+| `src/styles/guide.css`       | Shared guide styles                                    |
+| `public/assets/`             | Fonts and screenshots served at `/assets/`             |
+| `docs/*.html`                | Original HTML sources (optional reference)             |
 | `docs/outline.md`            | Facilitator script and timing                          |
-| `slides/ai-coding-workshop/` | Presenter slides                                       |
-| `docs/assets/`               | Handout screenshots (must ship next to `en-workshop-guide.html`) |
+| `docs/assets/`               | Source screenshots (copied to `public/assets/` for the site) |

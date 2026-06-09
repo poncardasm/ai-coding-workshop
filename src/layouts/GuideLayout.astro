@@ -1,0 +1,100 @@
+---
+import '../styles/guide.css';
+
+interface Props {
+  lang: 'en' | 'fi' | 'sv';
+  title: string;
+}
+
+const { lang, title } = Astro.props;
+
+const alternates = [
+  { lang: 'en', href: '/en/' },
+  { lang: 'fi', href: '/fi/' },
+  { lang: 'sv', href: '/sv/' },
+] as const;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {alternates.map(({ lang: hreflang, href }) => (
+      <link rel="alternate" hreflang={hreflang} href={href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href="/en/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('pre.prompt').forEach(function (pre) {
+          var block = document.createElement('div');
+          block.className = 'prompt-block';
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'copy-btn';
+          btn.textContent = 'Copy';
+          btn.setAttribute('aria-label', 'Copy prompt to clipboard');
+          pre.parentNode.insertBefore(block, pre);
+          block.append(btn, pre);
+        });
+
+        document.body.addEventListener('click', function (e) {
+          var btn = e.target.closest('.copy-btn');
+          if (!btn) return;
+
+          var pre = btn.parentElement.querySelector('pre.prompt');
+          if (!pre) return;
+
+          var text = pre.textContent.trim();
+
+          function showCopied() {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            btn.setAttribute('aria-label', 'Copied to clipboard');
+            window.setTimeout(function () {
+              btn.textContent = 'Copy';
+              btn.classList.remove('copied');
+              btn.setAttribute('aria-label', 'Copy prompt to clipboard');
+            }, 2000);
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(showCopied).catch(fallbackCopy);
+          } else {
+            fallbackCopy();
+          }
+
+          function fallbackCopy() {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+              document.execCommand('copy');
+              showCopied();
+            } catch (err) {
+              btn.textContent = 'Failed';
+              window.setTimeout(function () {
+                btn.textContent = 'Copy';
+              }, 2000);
+            }
+            document.body.removeChild(ta);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
