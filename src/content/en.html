@@ -1,20 +1,22 @@
 <div class="wrap">
     <header>
       <nav class="lang" aria-label="Language">
-        <a href="/en/" hreflang="en" aria-current="page">English</a>
+        <a href="/" hreflang="en" aria-current="page">English</a>
         <a href="/fi/" hreflang="fi">Suomi</a>
         <a href="/sv/" hreflang="sv">Svenska</a>
       </nav>
       <p class="eyebrow">Follow-along guide</p>
-      <h1>From Idea to Website: AI Coding for Beginners</h1>
-      <p class="lede">Set up OpenCode and Neuralwatt before we start building. Bookmark this page for easy access.</p>
+      <h1>From Idea to Website:<br />AI Coding for Beginners</h1>
+      <p class="lede">Set up OpenCode, Neuralwatt, GitHub, and Vercel before we start building. Bookmark this page for easy access.</p>
       <nav class="toc" aria-label="On this page">
         <a href="#opencode"><span class="num" aria-hidden="true">1</span> OpenCode</a>
         <a href="#neuralwatt"><span class="num" aria-hidden="true">2</span> Neuralwatt</a>
         <a href="#connect"><span class="num" aria-hidden="true">3</span> Connect them</a>
-        <a href="#writing-prompts"><span class="num" aria-hidden="true">4</span> Writing prompts</a>
-        <a href="#prompts"><span class="num" aria-hidden="true">5</span> Example prompts</a>
-        <a href="#during"><span class="num" aria-hidden="true">6</span> During the workshop</a>
+        <a href="#github"><span class="num" aria-hidden="true">4</span> GitHub</a>
+        <a href="#vercel"><span class="num" aria-hidden="true">5</span> Vercel</a>
+        <a href="#writing-prompts"><span class="num" aria-hidden="true">6</span> Writing prompts</a>
+        <a href="#prompts"><span class="num" aria-hidden="true">7</span> Example prompts</a>
+        <a href="#during"><span class="num" aria-hidden="true">8</span> During the workshop</a>
       </nav>
     </header>
 
@@ -133,13 +135,83 @@
       </p>
 
       <h3 id="quick-test">Quick test</h3>
-      <p>Once connected, copy this prompt into OpenCode — do this before the track prompts in section 5:</p>
+      <p>Once connected, copy this prompt into OpenCode — do this before the track prompts in section 7:</p>
       <p class="prompt-step">Quick test — try this first</p>
       <pre class="prompt">Create a one-page HTML file called index.html with a heading that says "Hello, my site" and a short paragraph about me. Use a clean, simple style.</pre>
     </section>
 
+    <section id="github">
+      <h2><span class="num" aria-hidden="true">4</span> Create a GitHub account</h2>
+      <p>
+        <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a> is where we’ll store the website you build today.
+        A free account is all you need — we’ll push your project there during the workshop so you can keep it and share it.
+      </p>
+
+      <div class="btn-row">
+        <a class="btn btn-primary" href="https://github.com/signup" target="_blank" rel="noopener noreferrer">Sign up for GitHub</a>
+        <a class="btn btn-secondary" href="https://github.com/login" target="_blank" rel="noopener noreferrer">Sign in</a>
+        <a class="btn btn-secondary" href="https://docs.github.com/en/get-started/signing-up-for-github" target="_blank" rel="noopener noreferrer">GitHub signup guide</a>
+      </div>
+
+      <h3>Register</h3>
+      <ol>
+        <li>Go to <a href="https://github.com/signup" target="_blank" rel="noopener noreferrer">github.com/signup</a></li>
+        <li>Enter your <strong>email</strong>, create a <strong>password</strong>, and choose a <strong>username</strong> (this becomes part of your public profile URL)</li>
+        <li>Complete the verification puzzle or code GitHub sends to your email</li>
+        <li>Answer the short setup questions (you can skip optional steps like choosing a plan — the <strong>Free</strong> tier is fine)</li>
+        <li>Verify your email address if GitHub asks you to confirm from your inbox</li>
+      </ol>
+
+      <div class="card highlight">
+        <p class="card-title">Why we need GitHub today</p>
+        <p style="margin:0">
+          Your finished <code>index.html</code> site will live in a GitHub <strong>repository</strong> (a project folder in the cloud).
+          That lets you save your work, open it on another computer, and connect it to Vercel for a live link.
+        </p>
+      </div>
+
+      <p class="note">
+        <strong>Already have an account?</strong> Sign in at <a href="https://github.com/login" target="_blank" rel="noopener noreferrer">github.com/login</a> and make sure you know your username and password (or how you sign in with Google/Apple).
+      </p>
+    </section>
+
+    <section id="vercel">
+      <h2><span class="num" aria-hidden="true">5</span> Create a Vercel account</h2>
+      <p>
+        <a href="https://vercel.com/" target="_blank" rel="noopener noreferrer">Vercel</a> publishes your site to the internet and gives you a shareable link (e.g. <code>your-site.vercel.app</code>).
+        The free <strong>Hobby</strong> plan is enough for today’s one-page site.
+      </p>
+
+      <div class="btn-row">
+        <a class="btn btn-primary" href="https://vercel.com/signup" target="_blank" rel="noopener noreferrer">Sign up for Vercel</a>
+        <a class="btn btn-secondary" href="https://vercel.com/login" target="_blank" rel="noopener noreferrer">Sign in</a>
+        <a class="btn btn-secondary" href="https://vercel.com/docs" target="_blank" rel="noopener noreferrer">Vercel docs</a>
+      </div>
+
+      <h3>Register (recommended: use GitHub)</h3>
+      <ol>
+        <li>Go to <a href="https://vercel.com/signup" target="_blank" rel="noopener noreferrer">vercel.com/signup</a></li>
+        <li>Click <strong>Continue with GitHub</strong> — this is the easiest path since you already created a GitHub account in section 4</li>
+        <li>Authorize Vercel when GitHub asks (Vercel needs permission to read your repos and deploy from them)</li>
+        <li>Finish Vercel’s short onboarding (team name can be your name; the free plan is selected by default)</li>
+        <li>You should land on the Vercel <strong>Dashboard</strong> — you’re ready; we’ll deploy your site together during the workshop</li>
+      </ol>
+
+      <div class="card highlight">
+        <p class="card-title">What happens during the workshop</p>
+        <p style="margin:0">
+          After you build your site with OpenCode, we’ll put it on GitHub and import that repo into Vercel.
+          Vercel will build and host it — you’ll get a live URL to open on your phone and share with others.
+        </p>
+      </div>
+
+      <p class="note warn">
+        <strong>Don’t paste secrets.</strong> Your Neuralwatt API key stays in OpenCode only — never commit API keys to GitHub or add them to your website files.
+      </p>
+    </section>
+
     <section id="writing-prompts">
-      <h2><span class="num" aria-hidden="true">4</span> Writing prompts</h2>
+      <h2><span class="num" aria-hidden="true">6</span> Writing prompts</h2>
       <p>
         The AI works best when you write like you’re briefing a helpful teammate: clear goal, enough context, and one request at a time.
       </p>
@@ -178,7 +250,7 @@
     </section>
 
     <section id="prompts">
-      <h2><span class="num" aria-hidden="true">5</span> Example prompts</h2>
+      <h2><span class="num" aria-hidden="true">7</span> Example prompts</h2>
       <p>
         Pick <strong>one track</strong> below. Copy each prompt into OpenCode in order.
         Replace anything in <code>[brackets]</code> with your own details before sending.
@@ -347,7 +419,7 @@ Fix only that issue in index.html. Show me the exact CSS you changed.</pre>
     </section>
 
     <section id="during">
-      <h2><span class="num" aria-hidden="true">6</span> During the workshop</h2>
+      <h2><span class="num" aria-hidden="true">8</span> During the workshop</h2>
 
       <div class="card">
         <p class="card-title">How we’ll work with AI</p>
@@ -385,6 +457,8 @@ Fix only that issue in index.html. Show me the exact CSS you changed.</pre>
           <li><a href="https://opencode.ai/docs">OpenCode docs</a></li>
           <li><a href="https://portal.neuralwatt.com/auth/register">Neuralwatt — create account</a></li>
           <li><a href="https://portal.neuralwatt.com/docs/integrations/opencode">Neuralwatt × OpenCode setup</a></li>
+          <li><a href="https://github.com/signup">GitHub — sign up</a></li>
+          <li><a href="https://vercel.com/signup">Vercel — sign up</a></li>
         </ul>
       </div>
 

@@ -25,8 +25,7 @@ The participant follow-along guide is an [Astro](https://astro.build) static sit
 
 | Route | Language |
 | ----- | -------- |
-| `/` | Language picker |
-| `/en/` | English |
+| `/` | English (default) |
 | `/fi/` | Finnish |
 | `/sv/` | Swedish |
 

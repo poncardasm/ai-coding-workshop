@@ -8,8 +8,7 @@ The site is a static [Astro](https://astro.build) app. There are no slides, no R
 
 | Route | File | Purpose |
 | ----- | ---- | ------- |
-| `/` | `src/pages/index.astro` | Language picker |
-| `/en/` | `src/pages/en/index.astro` | English guide |
+| `/` | `src/pages/index.astro` | English guide (default) |
 | `/fi/` | `src/pages/fi/index.astro` | Finnish guide |
 | `/sv/` | `src/pages/sv/index.astro` | Swedish guide |
 
@@ -21,10 +20,9 @@ Each language page wraps raw HTML from `src/content/<lang>.html` inside `src/lay
 src/
   content/          # Guide body HTML (en, fi, sv)
   layouts/          # GuideLayout.astro — head, hreflang, copy-button script
-  pages/            # Astro routes (index + per-language)
+  pages/            # Astro routes (English at /, fi and sv at /fi/ and /sv/)
   styles/
     guide.css       # Guide page styles
-    picker.css      # Language-picker page styles
 public/
   assets/           # Fonts and screenshots (served at /assets/…)
 docs/               # Facilitator notes + original HTML sources
@@ -36,9 +34,9 @@ docs/               # Facilitator notes + original HTML sources
 ## Hard rules
 
 - **Edit guide copy** in `src/content/<lang>.html`. If you also maintain the standalone HTML in `docs/`, keep both in sync.
-- **Edit styles** in `src/styles/guide.css` (guide pages) or `src/styles/picker.css` (home page). Do not inline large style blocks in Astro files.
+- **Edit styles** in `src/styles/guide.css`. Do not inline large style blocks in Astro files.
 - **Put deployable assets** (fonts, images) in `public/assets/`. Reference them as `/assets/…` in HTML.
-- **Language links** must point to `/en/`, `/fi/`, `/sv/` — not `.html` filenames.
+- **Language links** must point to `/` (English), `/fi/`, `/sv/` — not `.html` filenames.
 - **Do not add dependencies** unless clearly needed. Prefer plain HTML, CSS, and minimal Astro.
 - **Do not touch** `package.json` or `astro.config.mjs` unless the task requires it.
 

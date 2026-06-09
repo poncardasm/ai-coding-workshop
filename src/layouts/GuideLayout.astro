@@ -9,7 +9,7 @@ interface Props {
 const { lang, title } = Astro.props;
 
 const alternates = [
-  { lang: 'en', href: '/en/' },
+  { lang: 'en', href: '/' },
   { lang: 'fi', href: '/fi/' },
   { lang: 'sv', href: '/sv/' },
 ] as const;
@@ -24,7 +24,7 @@ const alternates = [
     {alternates.map(({ lang: hreflang, href }) => (
       <link rel="alternate" hreflang={hreflang} href={href} />
     ))}
-    <link rel="alternate" hreflang="x-default" href="/en/" />
+    <link rel="alternate" hreflang="x-default" href="/" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
